@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Component } from "react";
 // import * as socketClient from "socket.io-client";
-// import "./App.css";
+import "./App.css";
 
 import Game from "./components/tic-tac-toe/Game/Game";
 
