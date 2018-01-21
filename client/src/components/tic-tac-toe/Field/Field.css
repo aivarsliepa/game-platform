@@ -1,0 +1,8 @@
+.Field {
+  border: 1px solid #71319c;
+  display: flex;
+}
+
+.Field img {
+  margin: auto;
+}
