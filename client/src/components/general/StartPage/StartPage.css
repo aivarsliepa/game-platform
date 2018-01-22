@@ -1,0 +1,5 @@
+[type="radio"]:not(:checked) + label,
+[type="radio"]:checked + label {
+  display: flex;
+  justify-content: space-around;
+}

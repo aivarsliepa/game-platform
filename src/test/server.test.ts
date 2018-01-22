@@ -1,6 +1,8 @@
 // import * as request from "supertest";
 import * as socketIO from "socket.io-client";
 import { Socket } from "socket.io-client";
+import { Message } from "../utils/message";
+import "../server";
 
 describe("Socket Test", () => {
   let socket: SocketIOClient.Socket;
@@ -16,16 +18,26 @@ describe("Socket Test", () => {
     });
   });
 
-  it("some random test", done => {
+  it("should be connected", done => {
     expect(socket.connected).toBeTruthy();
     done();
   });
 
-  it("should receive new message", done => {
-    socket.on("newMsg", (data: string) => {
-      expect(data).toBe("Hello There, from the server socket!");
+  it("should receive message when sent", done => {
+    const name = "user1";
+    const room = "room1";
+    const msg = "hello there!";
+
+    socket.on("joinSuccess", () => {
+      socket.emit("roomMsg", { msg });
+    });
+
+    socket.on("roomMsg", (data: Message) => {
+      expect(data).toMatchObject({ msg, from: name });
       done();
     });
+
+    socket.emit("join", { name, room });
   });
 
   afterEach(done => {

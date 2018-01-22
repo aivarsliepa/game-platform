@@ -4,6 +4,8 @@ import * as http from "http";
 import * as socketIO from "socket.io";
 
 import { UserData } from "./data/User";
+import { isRealString } from "./utils/validate";
+import { generateMessage } from "./utils/message";
 
 const PORT = process.env.PORT || 5000;
 const app = express();
@@ -24,18 +26,35 @@ export const users = new UserData();
 
 io.on("connection", socket => {
   users.addUser({ id: socket.id });
-  socket.emit("newMsg", "Hello There, from the server socket!");
+
+  socket.on("join", ({ name, room }, callback) => {
+    if (isRealString(name) && isRealString(room)) {
+      const roomId = room.trim().toLowerCase();
+      users.removeUser(socket.id);
+      users.addUser({ id: socket.id, name, room: roomId });
+      socket.join(roomId, err => {
+        if (!err) {
+          socket.emit("joinSuccess");
+        }
+      });
+    }
+  });
+
+  socket.on("roomMsg", ({ msg }) => {
+    const user = users.getUser(socket.id);
+    if (!user || !isRealString(msg)) {
+      return;
+    }
+    io.to(user.room).emit("roomMsg", generateMessage(user.name, msg));
+  });
 
   socket.on("disconnect", () => {
     const user = users.removeUser(socket.id);
-    console.log(user);
   });
 });
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
-
-console.log("heelllooo theree!");
 
 export default server;

@@ -2,8 +2,7 @@ import * as React from "react";
 import { Component } from "react";
 // import * as socketClient from "socket.io-client";
 import "./App.css";
-
-import Game from "./components/tic-tac-toe/Game/Game";
+import StartPage from "../StartPage/StartPage";
 
 export interface AppState {
   response: boolean | string;
@@ -27,7 +26,7 @@ class App extends Component<Object, AppState> {
     // const { response } = this.state;
     return (
       <div>
-        <Game />
+        <StartPage />
       </div>
     );
   }
