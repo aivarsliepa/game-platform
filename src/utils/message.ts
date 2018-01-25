@@ -1,13 +1,13 @@
 export interface Message {
   from: string;
-  msg: string;
+  message: string;
   time: number;
 }
 
-export function generateMessage(from: string, msg: string): Message {
+export function generateMessage(from: string, message: string): Message {
   return {
     from,
-    msg,
+    message,
     time: new Date().getTime()
   };
 }

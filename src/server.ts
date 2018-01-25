@@ -46,11 +46,13 @@ io.on("connection", socket => {
     }
   });
 
-  socket.on(NEW_ROOM_MSG, ({ msg }) => {
+  socket.on(NEW_ROOM_MSG, (msg: string) => {
     const user = users.getUser(socket.id);
+    console.log(msg);
     if (!user || !isRealString(msg)) {
       return;
     }
+
     io.to(user.room).emit(NEW_ROOM_MSG, generateMessage(user.name, msg));
   });
 

@@ -3,6 +3,11 @@ import * as socketIO from "socket.io-client";
 import { Socket } from "socket.io-client";
 import { Message } from "../utils/message";
 import "../server";
+import {
+  JOIN_SUCCESS,
+  JOIN_ROOM,
+  NEW_ROOM_MSG
+} from "../../client/src/event-constants/index";
 
 describe("Socket Test", () => {
   let socket: SocketIOClient.Socket;
@@ -26,18 +31,18 @@ describe("Socket Test", () => {
   it("should receive message when sent", done => {
     const name = "user1";
     const room = "room1";
-    const msg = "hello there!";
+    const message = "hello there!";
 
-    socket.on("joinSuccess", () => {
-      socket.emit("roomMsg", { msg });
+    socket.on(JOIN_SUCCESS, () => {
+      socket.emit(NEW_ROOM_MSG, message);
     });
 
-    socket.on("roomMsg", (data: Message) => {
-      expect(data).toMatchObject({ msg, from: name });
+    socket.on(NEW_ROOM_MSG, (data: Message) => {
+      expect(data).toMatchObject({ message, from: name });
       done();
     });
 
-    socket.emit("join", { name, room });
+    socket.emit(JOIN_ROOM, { name, room });
   });
 
   afterEach(done => {

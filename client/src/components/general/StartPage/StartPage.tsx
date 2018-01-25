@@ -16,7 +16,6 @@ interface StartPageProps {
 }
 
 class StartPage extends Component<StartPageProps, StartPageState> {
-  input: HTMLInputElement | null;
   constructor(props: StartPageProps) {
     super(props);
     this.state = {

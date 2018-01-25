@@ -3,10 +3,10 @@ import { NewRoomAction, NEW_ROOM } from "../../actions/types";
 
 export type RoomState = string | null;
 
-export const roomReducer: Reducer<RoomState> = (
+export const reducer: Reducer<RoomState> = (
   state = null,
   { room, type }: NewRoomAction
-): RoomState => {
+) => {
   switch (type) {
     case NEW_ROOM:
       return room;

@@ -3,10 +3,10 @@ import { SocketAction, SOCKET } from "../../actions/types";
 
 export type SocketState = SocketIOClient.Socket | null;
 
-export const socketReducer: Reducer<SocketState> = (
+export const reducer: Reducer<SocketState> = (
   state = null,
   { socket, type }: SocketAction
-): SocketState => {
+) => {
   switch (type) {
     case SOCKET:
       return socket;
