@@ -1,6 +1,9 @@
 import * as React from "react";
 import { Component, ChangeEvent, FormEvent } from "react";
 import "./StartPage.css";
+import { connect } from "react-redux";
+import { RootState } from "../../../reducers/index";
+import { JOIN_ROOM } from "../../../../src/event-constants/index";
 const tictactoe = require("./tic-tac-toe.svg");
 
 interface StartPageState {
@@ -8,9 +11,13 @@ interface StartPageState {
   roomName: string;
 }
 
-class StartPage extends Component<Object, StartPageState> {
+interface StartPageProps {
+  socket: SocketIOClient.Socket | null;
+}
+
+class StartPage extends Component<StartPageProps, StartPageState> {
   input: HTMLInputElement | null;
-  constructor(props: Object) {
+  constructor(props: StartPageProps) {
     super(props);
     this.state = {
       roomName: "",
@@ -31,13 +38,18 @@ class StartPage extends Component<Object, StartPageState> {
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    console.log(this.state.userName);
-    console.log(this.state.roomName);
+    const socket = this.props.socket;
+    if (socket) {
+      const room = this.state.roomName;
+      const name = this.state.userName;
+
+      socket.emit(JOIN_ROOM, { room, name });
+    }
   }
 
-  render() {
+  renderForm(): JSX.Element {
     return (
-      <div className="card-panel">
+      <div className="card-panel StartPage">
         <form onSubmit={this.handleSubmit} autoComplete="off">
           <div className="input-field">
             <input
@@ -52,7 +64,6 @@ class StartPage extends Component<Object, StartPageState> {
           <p>
             <input
               className="with-gap"
-              name="room"
               type="radio"
               id="tictactoe"
               value="tictactoe"
@@ -63,17 +74,21 @@ class StartPage extends Component<Object, StartPageState> {
               <img src={tictactoe} alt="tic-tac-toe" width="20" height="20" />
             </label>
           </p>
-          <button
-            className="btn waves-effect waves-light"
-            type="submit"
-            name="action"
-          >
+          <button className="btn waves-effect waves-light" type="submit">
             Enter
           </button>
         </form>
       </div>
     );
   }
+
+  render() {
+    return <div>{this.renderForm()}</div>;
+  }
 }
 
-export default StartPage;
+function mapStateToProps({ socket }: RootState): StartPageProps {
+  return { socket };
+}
+
+export default connect(mapStateToProps)(StartPage);

@@ -1,35 +1,42 @@
 import * as React from "react";
 import { Component } from "react";
-// import * as socketClient from "socket.io-client";
-import "./App.css";
-import StartPage from "../StartPage/StartPage";
 
-export interface AppState {
-  response: boolean | string;
-  endpoint: string;
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+
+import StartPage from "../StartPage/StartPage";
+import Room from "../../room/Room/Room";
+import "./App.css";
+import { RootState } from "../../../reducers";
+
+export interface AppProps {
+  room: string | null;
 }
 
-class App extends Component<Object, AppState> {
-  // constructor() {
-  // super({});
-  // this.state = {
-  //   response: false,
-  //   endpoint: "/"
-  // };
-  // }
-  componentDidMount() {
-    // const { endpoint } = this.state;
-    // const socket = socketClient(endpoint);
-    // socket.on("newMsg", (data: string) => this.setState({ response: data }));
-  }
+class App extends Component<AppProps, Object> {
   render() {
-    // const { response } = this.state;
+    const room = this.props.room;
     return (
-      <div>
-        <StartPage />
+      <div className="App blue lighten-1">
+        <BrowserRouter>
+          <Switch>
+            <Route
+              exact={true}
+              path="/"
+              render={() =>
+                room ? <Redirect to={`/room/${room}`} /> : <StartPage />
+              }
+            />
+            <Route exact={true} path="/room/:id" component={Room} />
+          </Switch>
+        </BrowserRouter>
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps({ room }: RootState): AppProps {
+  return { room };
+}
+
+export default connect(mapStateToProps)(App);

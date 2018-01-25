@@ -1,0 +1,4 @@
+.NewMessageForm {
+  grid-area: bottom;
+  padding: 1em;
+}

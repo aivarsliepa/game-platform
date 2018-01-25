@@ -3,20 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/*": {
+    "/socket*/*": {
       "target": "http://localhost:5000"
     }
   },
   "dependencies": {
+    "@types/deep-freeze": "^0.1.1",
     "@types/jest": "^22.0.1",
     "@types/react": "^16.0.34",
     "@types/react-dom": "^16.0.3",
+    "@types/react-redux": "^5.0.14",
+    "@types/react-router-dom": "^4.2.3",
+    "@types/redux": "^3.6.0",
     "@types/socket.io-client": "^1.4.32",
+    "deep-freeze": "0.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-materialize": "^1.1.2",
+    "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
     "react-scripts-ts": "2.12.0",
-    "socket.io-client": "^2.0.4"
+    "redux": "^3.7.2",
+    "socket.io-client": "^2.0.4",
+    "ts-mockito": "^2.2.8"
   },
   "scripts": {
     "start": "react-scripts-ts start",
