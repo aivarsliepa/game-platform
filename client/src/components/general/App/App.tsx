@@ -17,7 +17,7 @@ class App extends Component<AppProps, Object> {
   render() {
     const room = this.props.room;
     return (
-      <div className="App blue lighten-1">
+      <div className="App">
         <BrowserRouter>
           <Switch>
             <Route

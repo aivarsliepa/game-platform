@@ -12,7 +12,7 @@ interface ChatterProps {
 
 const Chatter = ({ roomMessages }: ChatterProps) => {
   return (
-    <div className="Chatter light-blue lighten-5">
+    <div className="Chatter light-blue lighten-5 card-panel">
       {roomMessages.map(msg => <Message key={msg.from + msg.time} {...msg} />)}
     </div>
   );

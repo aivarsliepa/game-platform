@@ -32,18 +32,16 @@ class NewMessageForm extends Component<
     event.preventDefault();
     const socket = this.props.socket;
     if (socket) {
-      console.log(socket.connected, NEW_ROOM_MSG);
-      console.log(this.state.text);
       socket.emit(NEW_ROOM_MSG, this.state.text);
     }
   }
   render() {
     return (
-      <div className="NewMessageForm teal lighten-5">
-        <form autoComplete="off" onSubmit={this.handleSubmit}>
-          <div className="input-field">
+      <div className="NewMessageForm card-panel">
+        <form autoComplete="off" onSubmit={this.handleSubmit} className="row">
+          <div className="input-field NewMessageForm_input col l10">
             <input
-              className="materialize-textarea"
+              className="validate"
               placeholder="Write a message"
               maxLength={140}
               type="text"
@@ -51,7 +49,9 @@ class NewMessageForm extends Component<
               value={this.state.text}
             />
           </div>
-          <button className="waves-effect waves-light btn-large">Send</button>
+          <button className="waves-effect waves-light btn NewMessageForm_btn col l2">
+            Send
+          </button>
         </form>
       </div>
     );

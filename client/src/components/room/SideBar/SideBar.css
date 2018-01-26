@@ -1,3 +1,9 @@
 .SideBar {
   grid-area: sidebar;
+  margin: 0;
+}
+
+.SideBar_title {
+  font-weight: 700;
+  font-size: 50px;
 }

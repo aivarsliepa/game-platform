@@ -1,3 +1,5 @@
 .Chatter {
   grid-area: content;
+  padding: 1em;
+  margin: 0;
 }

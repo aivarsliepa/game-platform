@@ -1,4 +1,5 @@
 import * as React from "react";
+import "./Message.css";
 
 interface MessageProps {
   readonly from: string;
@@ -8,9 +9,10 @@ interface MessageProps {
 
 const Message = ({ from, message, time }: MessageProps) => {
   return (
-    <div>
-      {from} : {time}
-      <p>{message}</p>
+    <div className="Message">
+      <span className="Message__from">{from} :</span>{" "}
+      {new Date(time).toLocaleTimeString()}
+      <div className="blue-text text-darken-2">{message}</div>
     </div>
   );
 };

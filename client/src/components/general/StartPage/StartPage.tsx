@@ -65,7 +65,7 @@ class StartPage extends Component<StartPageProps, StartPageState> {
               className="with-gap"
               type="radio"
               id="tictactoe"
-              value="tictactoe"
+              value="TicTacToe"
               onChange={this.handleRoomChange}
             />
             <label htmlFor="tictactoe">

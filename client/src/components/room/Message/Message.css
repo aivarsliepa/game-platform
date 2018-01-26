@@ -1,0 +1,8 @@
+.Message {
+  margin: 0;
+  padding: 0.5em;
+}
+
+.Message__from {
+  font-weight: bold;
+}

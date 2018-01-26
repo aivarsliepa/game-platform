@@ -4,7 +4,7 @@
   justify-content: space-around;
 }
 
-form {
+.StartPage form {
   display: flex;
   flex-direction: column;
 }

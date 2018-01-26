@@ -11,8 +11,15 @@ import "./index.css";
 import { JOIN_SUCCESS, NEW_ROOM_MSG } from "../src/event-constants";
 import { NEW_ROOM, SOCKET, ADD_ROOM_MSG } from "./actions/types";
 
+import devState from "./dev/devstate";
+
 export const socket = io();
-const store = createStore(reducer);
+const store = createStore(
+  reducer,
+  devState,
+  // @ts-ignore
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 store.dispatch({ type: SOCKET, socket });
 
