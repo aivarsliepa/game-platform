@@ -33,6 +33,10 @@ export class UserData {
     return this.users.filter(user => user.room === room);
   }
 
+  getUserNamesForRoom(room: string): string[] {
+    return this.users.filter(user => user.room === room).map(user => user.name);
+  }
+
   setUserName(id: string, name: string): void {
     this.getUser(id).name = name;
   }

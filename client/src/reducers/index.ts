@@ -5,16 +5,19 @@ import {
   RoomMessagesState,
   reducer as roomMessages
 } from "./roomMessages/roomMessagesReducer";
+import { UserState, reducer as users } from "./users/usersReducer";
 
 export interface RootState {
   room: RoomState;
   socket: SocketState;
   roomMessages: RoomMessagesState;
+  users: UserState;
 }
 
 const rootReducer: Reducer<RootState> = combineReducers<RootState>({
   roomMessages,
   socket,
+  users,
   room
 });
 

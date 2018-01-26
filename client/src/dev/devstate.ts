@@ -1,30 +1,31 @@
 import { RootState } from "../reducers";
 import { Message } from "../reducers/roomMessages/roomMessagesReducer";
 
-const roomMsgs: Message[] = [
+const users = ["Aivars", "McGayver", "The Dude", "General Kenobi"];
+const roomMessages: Message[] = [
   {
-    from: "Aivars",
+    from: users[0],
     message:
       " Test message 1 Test message 1 Test message 1 Test message 1 Test" +
       " message 1 Test message 1 Test message 1 Test message 1",
     time: new Date().getTime()
   },
   {
-    from: "McGayver",
+    from: users[1],
     message:
       " Test message 1 Test message 1 Test message 1 Test message 1 Test" +
       " message 1 Test message 1 Test message 1 Test message 1",
     time: new Date().getTime()
   },
   {
-    from: "The Dude",
+    from: users[2],
     message:
       " Test message 1 Test message 1 Test message 1 Test message 1 Test" +
       " message 1 Test message 1 Test message 1 Test message 1",
     time: new Date().getTime()
   },
   {
-    from: "General Kenobi",
+    from: users[3],
     message: "Hello there!",
     time: new Date().getTime()
   }
@@ -33,7 +34,8 @@ const roomMsgs: Message[] = [
 const devState: RootState = {
   room: "TicTacToe",
   socket: null,
-  roomMessages: roomMsgs
+  roomMessages,
+  users
 };
 
 export default devState;

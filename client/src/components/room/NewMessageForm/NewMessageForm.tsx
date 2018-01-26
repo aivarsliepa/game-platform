@@ -39,7 +39,7 @@ class NewMessageForm extends Component<
     return (
       <div className="NewMessageForm card-panel">
         <form autoComplete="off" onSubmit={this.handleSubmit} className="row">
-          <div className="input-field NewMessageForm_input col l10">
+          <div className="input-field NewMessageForm_input col s10">
             <input
               className="validate"
               placeholder="Write a message"
@@ -49,7 +49,7 @@ class NewMessageForm extends Component<
               value={this.state.text}
             />
           </div>
-          <button className="waves-effect waves-light btn NewMessageForm_btn col l2">
+          <button className="waves-effect waves-light btn NewMessageForm_btn col s2">
             Send
           </button>
         </form>

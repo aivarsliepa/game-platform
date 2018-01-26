@@ -81,4 +81,12 @@ describe("UserData", () => {
       expect(users.getUser(user1.id).room).toBe(newRoom);
     });
   });
+
+  describe("getUserNamesForRoom", () => {
+    it("should return only names of users for a room", () => {
+      expect(users.getUserNamesForRoom(user3.room)).toEqual(
+        expect.arrayContaining([user2.name, user3.name])
+      );
+    });
+  });
 });

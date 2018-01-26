@@ -23,12 +23,16 @@ const store = createStore(
 
 store.dispatch({ type: SOCKET, socket });
 
-socket.on(JOIN_SUCCESS, (room: string) => {
-  store.dispatch({
-    type: NEW_ROOM,
-    room
-  });
-});
+socket.on(
+  JOIN_SUCCESS,
+  ({ room, users }: { room: string; users: string[] }) => {
+    store.dispatch({
+      type: NEW_ROOM,
+      room,
+      users
+    });
+  }
+);
 
 socket.on(NEW_ROOM_MSG, (msg: Message) => {
   store.dispatch({ type: ADD_ROOM_MSG, ...msg });

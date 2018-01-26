@@ -39,7 +39,10 @@ io.on("connection", socket => {
       users.addUser({ id: socket.id, name, room: roomId });
       socket.join(roomId, err => {
         if (!err) {
-          socket.emit(JOIN_SUCCESS, roomId);
+          socket.emit(JOIN_SUCCESS, {
+            room: roomId,
+            users: users.getUserNamesForRoom(roomId)
+          });
         }
       });
       console.log(users.getUserList());
