@@ -1,10 +1,10 @@
 import * as React from "react";
 import { Component, FormEvent, ChangeEvent } from "react";
-import { SocketState } from "../../../reducers/socket/socketReducer";
-import "./NewMessageForm.css";
 import { connect } from "react-redux";
-import { RootState } from "../../../reducers/index";
-import { NEW_ROOM_MSG } from "../../../event-constants/index";
+
+import "./NewMessageForm.css";
+import { NEW_ROOM_MSG } from "../../../constants/events";
+import { SocketState, RootState } from "../../../interfaces/states";
 
 interface NewMessageFormState {
   text: string;

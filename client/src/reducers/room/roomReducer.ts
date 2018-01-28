@@ -1,7 +1,8 @@
 import { Reducer } from "redux";
-import { NewRoomAction, NEW_ROOM } from "../../actions/types";
 
-export type RoomState = string | null;
+import { RoomState } from "../../interfaces/states";
+import { NewRoomAction } from "../../interfaces/actions";
+import { NEW_ROOM } from "../../constants/actions";
 
 export const reducer: Reducer<RoomState> = (
   state = null,

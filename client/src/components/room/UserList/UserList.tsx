@@ -1,8 +1,8 @@
 import * as React from "react";
-import User from "../User/User";
-import { UserState } from "../../../reducers/users/usersReducer";
-import { RootState } from "../../../reducers/index";
 import { connect } from "react-redux";
+
+import User from "../User/User";
+import { UserState, RootState } from "../../../interfaces/states";
 
 interface UserListProps {
   users: UserState;

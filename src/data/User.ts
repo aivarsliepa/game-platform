@@ -1,7 +1,7 @@
 export interface User {
-  name?: string;
+  name: string;
   id: string;
-  room?: string;
+  room: string;
 }
 
 export class UserData {
@@ -19,13 +19,11 @@ export class UserData {
     return this.users.length;
   }
 
-  removeUser(id: string): User {
-    const removedUser = this.getUser(id);
+  removeUser(id: string): void {
     this.users = this.users.filter(user => user.id !== id);
-    return removedUser;
   }
 
-  getUser(id: string): User {
+  getUser(id: string): User | undefined {
     return this.users.find(user => user.id === id);
   }
 
@@ -37,11 +35,10 @@ export class UserData {
     return this.users.filter(user => user.room === room).map(user => user.name);
   }
 
-  setUserName(id: string, name: string): void {
-    this.getUser(id).name = name;
-  }
-
   setUserRoom(id: string, room: string): void {
-    this.getUser(id).room = room;
+    const user = this.getUser(id);
+    if (user) {
+      user.room = room;
+    }
   }
 }

@@ -1,14 +1,8 @@
 import { Reducer } from "redux";
-import {
-  ADD_USER,
-  REMOVE_USER,
-  NEW_ROOM,
-  UserAction
-} from "../../actions/types";
 
-export type User = string;
-
-export type UserState = User[];
+import { ADD_USER, REMOVE_USER, NEW_ROOM } from "../../constants/actions";
+import { UserAction } from "../../interfaces/actions";
+import { UserState } from "../../interfaces/states";
 
 export const reducer: Reducer<UserState> = (
   state = [],

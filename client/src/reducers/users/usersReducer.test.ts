@@ -1,7 +1,9 @@
 import * as deepFreeze from "deep-freeze";
-import { reducer, UserState } from "./usersReducer";
-import { NEW_ROOM } from "../../actions/types";
+
+import { reducer } from "./usersReducer";
 import { removeUser, addUser } from "../../actions/creators";
+import { NEW_ROOM } from "../../constants/actions";
+import { UserState } from "../../interfaces/states";
 
 describe("usersReducer", () => {
   const testUser = "testUser";

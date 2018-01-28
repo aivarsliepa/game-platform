@@ -1,9 +1,9 @@
 import * as React from "react";
-import "./SideBar.css";
-import { RoomState } from "../../../reducers/room/roomReducer";
-import { RootState } from "../../../reducers/index";
 import { connect } from "react-redux";
+
+import "./SideBar.css";
 import UserList from "../UserList/UserList";
+import { RoomState, RootState } from "../../../interfaces/states";
 
 interface SideBarProps {
   room: RoomState;

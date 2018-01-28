@@ -1,5 +1,5 @@
-import { RootState } from "../reducers";
-import { Message } from "../reducers/roomMessages/roomMessagesReducer";
+import { Message } from "../interfaces/general";
+import { RootState } from "../interfaces/states";
 
 const users = ["Aivars", "McGayver", "The Dude", "General Kenobi"];
 const roomMessages: Message[] = [

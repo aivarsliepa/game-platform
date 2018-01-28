@@ -1,14 +1,8 @@
 import { Reducer } from "redux";
-import { ADD_ROOM_MSG, AddRoomMessageAction } from "../../actions/types";
 
-export interface Message {
-  readonly from: string;
-  readonly message: string;
-  readonly time: number;
-  readonly id?: string;
-}
-
-export type RoomMessagesState = Message[];
+import { AddRoomMessageAction } from "../../interfaces/actions";
+import { ADD_ROOM_MSG } from "../../constants/actions";
+import { RoomMessagesState } from "../../interfaces/states";
 
 export const reducer: Reducer<RoomMessagesState> = (
   state = [],

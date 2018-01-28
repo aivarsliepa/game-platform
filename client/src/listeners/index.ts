@@ -1,9 +1,9 @@
 import { Store } from "redux";
 
-import { RootState } from "../reducers/index";
-import { JOIN_SUCCESS, NEW_ROOM_MSG } from "../event-constants/index";
-import { NEW_ROOM, ADD_ROOM_MSG } from "../actions/types";
-import { Message } from "../reducers/roomMessages/roomMessagesReducer";
+import { JOIN_SUCCESS, NEW_ROOM_MSG } from "../constants/events";
+import { NEW_ROOM, ADD_ROOM_MSG } from "../constants/actions";
+import { Message } from "../interfaces/general";
+import { RootState } from "../interfaces/states";
 
 const listeners = (socket: SocketIOClient.Socket, store: Store<RootState>) => {
   socket.on(

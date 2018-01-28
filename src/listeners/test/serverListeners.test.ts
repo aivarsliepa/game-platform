@@ -1,13 +1,12 @@
-// import * as request from "supertest";
 import * as socketIO from "socket.io-client";
 import { Socket } from "socket.io-client";
-import { Message } from "../utils/message";
-import "../server";
+import { Message } from "../../utils/message";
+import "../../server";
 import {
   JOIN_SUCCESS,
   JOIN_ROOM,
   NEW_ROOM_MSG
-} from "../../client/src/event-constants/index";
+} from "../../../client/src/constants/events";
 
 describe("Socket Test", () => {
   let socket: SocketIOClient.Socket;

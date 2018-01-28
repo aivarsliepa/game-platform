@@ -1,7 +1,8 @@
 import { Reducer } from "redux";
-import { SocketAction, SOCKET } from "../../actions/types";
 
-export type SocketState = SocketIOClient.Socket | null;
+import { SocketState } from "../../interfaces/states";
+import { SocketAction } from "../../interfaces/actions";
+import { SOCKET } from "../../constants/actions";
 
 export const reducer: Reducer<SocketState> = (
   state = null,

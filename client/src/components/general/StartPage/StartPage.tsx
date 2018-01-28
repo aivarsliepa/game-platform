@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Component, ChangeEvent, FormEvent } from "react";
-import "./StartPage.css";
 import { connect } from "react-redux";
-import { RootState } from "../../../reducers/index";
-import { JOIN_ROOM } from "../../../../src/event-constants/index";
+import { Component, ChangeEvent, FormEvent } from "react";
+
+import "./StartPage.css";
+import { JOIN_ROOM } from "../../../constants/events";
+import { RootState, SocketState } from "../../../interfaces/states";
 const tictactoe = require("./tic-tac-toe.svg");
 
 interface StartPageState {
@@ -12,7 +13,7 @@ interface StartPageState {
 }
 
 interface StartPageProps {
-  socket: SocketIOClient.Socket | null;
+  socket: SocketState;
 }
 
 class StartPage extends Component<StartPageProps, StartPageState> {

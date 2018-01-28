@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 import StartPage from "../StartPage/StartPage";
 import Room from "../../room/Room/Room";
 import "./App.css";
-import { RootState } from "../../../reducers";
+import { RoomState, RootState } from "../../../interfaces/states";
 
-export interface AppProps {
-  room: string | null;
+interface AppProps {
+  room: RoomState;
 }
 
 class App extends Component<AppProps, Object> {

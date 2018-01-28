@@ -27,11 +27,6 @@ describe("UserData", () => {
   });
 
   describe("removeUser", () => {
-    it("should return deleted user", () => {
-      const result = users.removeUser(user1.id);
-      expect(result).toEqual(user1);
-    });
-
     it("should remove user", () => {
       users.removeUser(user2.id);
       expect(users.getUserList()).not.toEqual(expect.arrayContaining([user2]));
@@ -63,14 +58,6 @@ describe("UserData", () => {
       expect(users.getUserList()).toEqual(
         expect.arrayContaining([user1, user3, user2])
       );
-    });
-  });
-
-  describe("setUserName", () => {
-    it("should set correct user name", () => {
-      const newName = "newName";
-      users.setUserName(user1.id, newName);
-      expect(users.getUser(user1.id).name).toBe(newName);
     });
   });
 

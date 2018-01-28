@@ -7,8 +7,8 @@ import * as io from "socket.io-client";
 import App from "./components/general/App/App";
 import reducer from "../src/reducers";
 import "./index.css";
-import { SOCKET } from "./actions/types";
 import listeners from "./listeners";
+import { SOCKET } from "./constants/actions";
 // import devState from "./dev/devstate";
 
 export const socket = io();

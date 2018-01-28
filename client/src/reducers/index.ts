@@ -1,18 +1,10 @@
 import { Reducer, combineReducers } from "redux";
-import { RoomState, reducer as room } from "./room/roomReducer";
-import { SocketState, reducer as socket } from "./socket/socketReducer";
-import {
-  RoomMessagesState,
-  reducer as roomMessages
-} from "./roomMessages/roomMessagesReducer";
-import { UserState, reducer as users } from "./users/usersReducer";
 
-export interface RootState {
-  room: RoomState;
-  socket: SocketState;
-  roomMessages: RoomMessagesState;
-  users: UserState;
-}
+import { reducer as room } from "./room/roomReducer";
+import { reducer as socket } from "./socket/socketReducer";
+import { reducer as roomMessages } from "./roomMessages/roomMessagesReducer";
+import { reducer as users } from "./users/usersReducer";
+import { RootState } from "../interfaces/states";
 
 const rootReducer: Reducer<RootState> = combineReducers<RootState>({
   roomMessages,

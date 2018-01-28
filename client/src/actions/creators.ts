@@ -1,14 +1,8 @@
 import * as v4 from "uuid/v4";
 
-import { Message } from "../reducers/roomMessages/roomMessagesReducer";
-import {
-  AddRoomMessageAction,
-  ADD_ROOM_MSG,
-  UserAction,
-  ADD_USER,
-  REMOVE_USER
-} from "./types";
-import { User } from "../reducers/users/usersReducer";
+import { Message, User } from "../interfaces/general";
+import { AddRoomMessageAction, UserAction } from "../interfaces/actions";
+import { ADD_ROOM_MSG, ADD_USER, REMOVE_USER } from "../constants/actions";
 
 export const addRoomMessage = ({
   from,

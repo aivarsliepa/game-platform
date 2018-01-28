@@ -1,10 +1,9 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-import { RoomMessagesState } from "../../../reducers/roomMessages/roomMessagesReducer";
 import "./Chatter.css";
-import { RootState } from "../../../reducers/index";
 import Message from "../Message/Message";
+import { RoomMessagesState, RootState } from "../../../interfaces/states";
 
 interface ChatterProps {
   roomMessages: RoomMessagesState;
@@ -13,7 +12,7 @@ interface ChatterProps {
 const Chatter = ({ roomMessages }: ChatterProps) => {
   return (
     <div className="Chatter light-blue lighten-5 card-panel">
-      {roomMessages.map(msg => <Message key={msg.from + msg.time} {...msg} />)}
+      {roomMessages.map(msg => <Message key={msg.id} {...msg} />)}
     </div>
   );
 };
