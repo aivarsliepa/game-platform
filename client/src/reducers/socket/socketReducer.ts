@@ -5,11 +5,11 @@ export type SocketState = SocketIOClient.Socket | null;
 
 export const reducer: Reducer<SocketState> = (
   state = null,
-  { socket, type }: SocketAction
+  { type, payload }: SocketAction
 ) => {
   switch (type) {
     case SOCKET:
-      return socket;
+      return payload.socket;
     default:
       return state;
   }

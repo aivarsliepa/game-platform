@@ -5,11 +5,11 @@ export type RoomState = string | null;
 
 export const reducer: Reducer<RoomState> = (
   state = null,
-  { room, type }: NewRoomAction
+  { type, payload }: NewRoomAction
 ) => {
   switch (type) {
     case NEW_ROOM:
-      return room;
+      return payload.room;
     default:
       return state;
   }
