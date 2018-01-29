@@ -9,7 +9,6 @@ import {
   JoinRoom,
   NewRoomMessage
 } from "../interfaces/clientEvents/roomEvents";
-import { isRealString } from "../utils/validate";
 import { UserData } from "../data/User";
 import { generateMessage } from "../utils/message";
 
@@ -20,7 +19,7 @@ const listeners = (io: SocketIO.Server) => {
     users.addUser({ id: socket.id, name: "", room: "" });
 
     socket.on(JOIN_ROOM, ({ name, room }: JoinRoom, callback) => {
-      if (isRealString(name) && isRealString(room)) {
+      if (name && room) {
         const roomId = room.trim().toLowerCase();
         users.removeUser(socket.id);
         users.addUser({ id: socket.id, name, room: roomId });
@@ -38,7 +37,7 @@ const listeners = (io: SocketIO.Server) => {
 
     socket.on(NEW_ROOM_MSG, ({ message }: NewRoomMessage) => {
       const user = users.getUser(socket.id);
-      if (!user || !isRealString(message)) {
+      if (!user || !message) {
         return;
       }
 
