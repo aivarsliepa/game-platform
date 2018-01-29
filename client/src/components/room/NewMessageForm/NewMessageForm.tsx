@@ -34,6 +34,7 @@ class NewMessageForm extends Component<
     if (socket) {
       socket.emit(NEW_ROOM_MSG, { message: this.state.text });
     }
+    this.setState({ text: "" });
   }
   render() {
     return (
