@@ -19,8 +19,10 @@ export class UserData {
     return this.users.length;
   }
 
-  removeUser(id: string): void {
+  removeUser(id: string): User | undefined {
+    const removedUser = this.getUser(id);
     this.users = this.users.filter(user => user.id !== id);
+    return removedUser;
   }
 
   getUser(id: string): User | undefined {

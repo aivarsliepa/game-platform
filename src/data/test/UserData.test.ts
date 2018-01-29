@@ -32,6 +32,11 @@ describe("UserData", () => {
       expect(users.getUserList()).not.toEqual(expect.arrayContaining([user2]));
       expect(users.getCount()).toBe(2);
     });
+
+    it("should return removed user", () => {
+      const result = users.removeUser(user2.id);
+      expect(result).toBe(user2);
+    });
   });
 
   describe("getUser", () => {

@@ -32,7 +32,7 @@ class NewMessageForm extends Component<
     event.preventDefault();
     const socket = this.props.socket;
     if (socket) {
-      socket.emit(NEW_ROOM_MSG, this.state.text);
+      socket.emit(NEW_ROOM_MSG, { message: this.state.text });
     }
   }
   render() {

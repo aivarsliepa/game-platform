@@ -1,8 +1,14 @@
 import {
   JOIN_ROOM,
   JOIN_SUCCESS,
-  NEW_ROOM_MSG
+  NEW_ROOM_MSG,
+  ADD_USER,
+  REMOVE_USER
 } from "../../client/src/constants/events";
+import {
+  JoinRoom,
+  NewRoomMessage
+} from "../interfaces/clientEvents/roomEvents";
 import { isRealString } from "../utils/validate";
 import { UserData } from "../data/User";
 import { generateMessage } from "../utils/message";
@@ -13,7 +19,7 @@ const listeners = (io: SocketIO.Server) => {
   io.on("connection", socket => {
     users.addUser({ id: socket.id, name: "", room: "" });
 
-    socket.on(JOIN_ROOM, ({ name, room }, callback) => {
+    socket.on(JOIN_ROOM, ({ name, room }: JoinRoom, callback) => {
       if (isRealString(name) && isRealString(room)) {
         const roomId = room.trim().toLowerCase();
         users.removeUser(socket.id);
@@ -24,22 +30,26 @@ const listeners = (io: SocketIO.Server) => {
               room: roomId,
               users: users.getUserNamesForRoom(roomId)
             });
+            socket.broadcast.to(roomId).emit(ADD_USER, { user: name });
           }
         });
       }
     });
 
-    socket.on(NEW_ROOM_MSG, (msg: string) => {
+    socket.on(NEW_ROOM_MSG, ({ message }: NewRoomMessage) => {
       const user = users.getUser(socket.id);
-      if (!user || !isRealString(msg)) {
+      if (!user || !isRealString(message)) {
         return;
       }
 
-      io.to(user.room).emit(NEW_ROOM_MSG, generateMessage(user.name, msg));
+      io.to(user.room).emit(NEW_ROOM_MSG, generateMessage(user.name, message));
     });
 
     socket.on("disconnect", () => {
-      users.removeUser(socket.id);
+      const user = users.removeUser(socket.id);
+      if (user) {
+        io.to(user.room).emit(REMOVE_USER, { user: user.name });
+      }
     });
   });
 };
