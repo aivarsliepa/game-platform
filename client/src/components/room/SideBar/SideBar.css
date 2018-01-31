@@ -1,6 +1,7 @@
 .SideBar {
   grid-area: sidebar;
   margin: 0;
+  overflow-y: auto;
 }
 
 .SideBar_title {

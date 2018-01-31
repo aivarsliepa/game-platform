@@ -1,0 +1,13 @@
+.User {
+  cursor: pointer;
+  padding: 1em;
+}
+
+.User__challenge {
+  display: none;
+}
+
+.User__challenge.visible {
+  display: block;
+  animation: fadeIn 1s;
+}

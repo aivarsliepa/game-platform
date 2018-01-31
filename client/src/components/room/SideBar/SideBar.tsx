@@ -13,9 +13,7 @@ const SideBar = ({ room }: SideBarProps) => {
   return (
     <div className="SideBar light-blue lighten-4 card-panel">
       <div className="SideBar_title">{room}</div>
-      <div>
-        <UserList />{" "}
-      </div>
+      <UserList />{" "}
     </div>
   );
 };

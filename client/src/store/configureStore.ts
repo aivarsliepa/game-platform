@@ -2,7 +2,7 @@ import { createStore, Store, Dispatch, Action } from "redux";
 
 import { RootState } from "../interfaces/states";
 import reducer from "../reducers";
-// import devState from "./dev/devstate";
+import devState from "../dev/devstate";
 
 const addLoggingToDispatch = (store: Store<RootState>): Dispatch<RootState> => {
   const rawDispatch = store.dispatch;
@@ -29,8 +29,8 @@ const configureStore = (): Store<RootState> => {
   //     : undefined;
 
   const store = createStore(
-    reducer
-    // devState,
+    reducer,
+    devState
     // reduxDevTools
   );
 

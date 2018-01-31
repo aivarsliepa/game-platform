@@ -4,3 +4,16 @@ body {
   font-family: sans-serif;
   box-sizing: border-box;
 }
+
+.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -10,7 +10,7 @@ interface UserListProps {
 
 const UserList = ({ users }: UserListProps) => {
   return (
-    <div>
+    <div className="UserList">
       {users.map(user => {
         return <User key={user} name={user} />;
       })}
