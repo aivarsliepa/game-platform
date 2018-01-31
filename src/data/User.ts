@@ -20,13 +20,17 @@ export class UserData {
   }
 
   removeUser(id: string): User | undefined {
-    const removedUser = this.getUser(id);
+    const removedUser = this.getUserById(id);
     this.users = this.users.filter(user => user.id !== id);
     return removedUser;
   }
 
-  getUser(id: string): User | undefined {
+  getUserById(id: string): User | undefined {
     return this.users.find(user => user.id === id);
+  }
+
+  getUserByName(name: string): User | undefined {
+    return this.users.find(user => user.name === name);
   }
 
   getUserListForRoom(room: string): User[] {
@@ -38,7 +42,7 @@ export class UserData {
   }
 
   setUserRoom(id: string, room: string): void {
-    const user = this.getUser(id);
+    const user = this.getUserById(id);
     if (user) {
       user.room = room;
     }

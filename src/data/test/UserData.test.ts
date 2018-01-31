@@ -39,13 +39,13 @@ describe("UserData", () => {
     });
   });
 
-  describe("getUser", () => {
+  describe("getUserById", () => {
     it("should return correct user", () => {
-      expect(users.getUser(user1.id)).toEqual(user1);
+      expect(users.getUserById(user1.id)).toEqual(user1);
     });
 
     it("should not find non existant user", () => {
-      expect(users.getUser("zzzzzss")).toBeFalsy();
+      expect(users.getUserById("zzzzzss")).toBeFalsy();
     });
   });
 
@@ -70,7 +70,7 @@ describe("UserData", () => {
     it("should set correct user name", () => {
       const newRoom = "newRoom";
       users.setUserRoom(user1.id, newRoom);
-      expect(users.getUser(user1.id).room).toBe(newRoom);
+      expect(users.getUserById(user1.id).room).toBe(newRoom);
     });
   });
 
@@ -79,6 +79,16 @@ describe("UserData", () => {
       expect(users.getUserNamesForRoom(user3.room)).toEqual(
         expect.arrayContaining([user2.name, user3.name])
       );
+    });
+  });
+
+  describe("findUserById", () => {
+    it("should return correct user", () => {
+      expect(users.getUserByName(user1.name)).toEqual(user1);
+    });
+
+    it("should not find non existant user", () => {
+      expect(users.getUserByName("zzzzzss")).toBeFalsy();
     });
   });
 });

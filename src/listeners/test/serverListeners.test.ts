@@ -8,7 +8,8 @@ import {
   JOIN_ROOM,
   NEW_ROOM_MSG,
   ADD_USER,
-  REMOVE_USER
+  REMOVE_USER,
+  CHALLENGE
 } from "../../../client/src/constants/events";
 
 const URL = "http://localhost:5000";
@@ -17,7 +18,7 @@ const socketOptions = {
   forceNew: true
 };
 
-describe("Socket message test", () => {
+describe("Socket message", () => {
   let socket: SocketIOClient.Socket;
 
   beforeEach(done => {
@@ -53,7 +54,7 @@ describe("Socket message test", () => {
   });
 });
 
-describe("Socket join/leave room user update test", () => {
+describe("Socket join/leave room user update", () => {
   let socket1: SocketIOClient.Socket;
   let socket2: SocketIOClient.Socket;
   const name1 = "user1";
@@ -62,10 +63,8 @@ describe("Socket join/leave room user update test", () => {
 
   beforeEach(done => {
     socket1 = socketIO.connect(URL, socketOptions);
-
     socket1.on("connect", () => {
       socket2 = socketIO.connect(URL, socketOptions);
-
       socket2.on("connect", () => {
         done();
       });
@@ -81,7 +80,6 @@ describe("Socket join/leave room user update test", () => {
     socket1.on(JOIN_SUCCESS, () => {
       socket2.emit(JOIN_ROOM, { name: name2, room });
     });
-
     socket1.emit(JOIN_ROOM, { name: name1, room });
   });
 
@@ -94,11 +92,52 @@ describe("Socket join/leave room user update test", () => {
     socket1.on(JOIN_SUCCESS, () => {
       socket2.emit(JOIN_ROOM, { name: name2, room });
     });
-
     socket2.on(JOIN_SUCCESS, () => {
       socket2.disconnect();
     });
+    socket1.emit(JOIN_ROOM, { name: name1, room });
+  });
 
+  afterEach(done => {
+    if (socket1.connected) {
+      socket1.disconnect();
+    }
+    if (socket2.connected) {
+      socket2.disconnect();
+    }
+    done();
+  });
+});
+
+describe("Socket challenge user", () => {
+  let socket1: SocketIOClient.Socket;
+  let socket2: SocketIOClient.Socket;
+  const name1 = "user1";
+  const name2 = "user2";
+  const room = "room2";
+
+  beforeEach(done => {
+    socket1 = socketIO.connect(URL, socketOptions);
+    socket1.on("connect", () => {
+      socket2 = socketIO.connect(URL, socketOptions);
+      socket2.on("connect", () => {
+        done();
+      });
+    });
+  });
+
+  it("should send challenge to other user with challengers name", done => {
+    socket1.on(CHALLENGE, ({ user }: { user: string }) => {
+      expect(user).toBe(name2);
+      done();
+    });
+
+    socket1.on(JOIN_SUCCESS, () => {
+      socket2.emit(JOIN_ROOM, { name: name2, room });
+    });
+    socket2.on(JOIN_SUCCESS, () => {
+      socket2.emit(CHALLENGE, { user: name1 });
+    });
     socket1.emit(JOIN_ROOM, { name: name1, room });
   });
 

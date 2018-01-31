@@ -1,9 +1,13 @@
 import * as React from "react";
+import { connect } from "react-redux";
 
 import "./User.css";
+import { RootState, SocketState } from "../../../interfaces/states";
+import { CHALLENGE } from "../../../constants/events";
 
 interface UserProps {
   name: string;
+  socket: SocketState;
 }
 
 interface UserState {
@@ -22,19 +26,23 @@ class User extends React.Component<UserProps, UserState> {
     this.setState({ visible: !this.state.visible });
   }
 
-  challenge(event: React.MouseEvent<HTMLButtonElement>) {
-    console.log("hey");
+  challenge(user: string) {
+    const { socket } = this.props;
+    if (socket) {
+      socket.emit(CHALLENGE, { user });
+    }
   }
 
   render() {
+    const { name } = this.props;
     return (
       <div className="card-panel User" onClick={() => this.handleClick()}>
-        <div>{this.props.name}</div>
+        <div>{name}</div>
         <button
           className={`User__challenge btn waves-effect red lighten-1 ${
             this.state.visible ? "visible" : ""
           }`}
-          onClick={e => this.challenge(e)}
+          onClick={() => this.challenge(name)}
         >
           Challenge!
         </button>
@@ -43,4 +51,8 @@ class User extends React.Component<UserProps, UserState> {
   }
 }
 
-export default User;
+const mapStatetoProps = ({ socket }: RootState) => ({
+  socket
+});
+
+export default connect(mapStatetoProps)(User);

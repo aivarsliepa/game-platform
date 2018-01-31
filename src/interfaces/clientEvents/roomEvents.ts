@@ -6,3 +6,7 @@ export interface JoinRoom {
 export interface NewRoomMessage {
   message: string;
 }
+
+export interface Challenge {
+  user: string;
+}

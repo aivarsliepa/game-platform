@@ -3,11 +3,13 @@ import {
   JOIN_SUCCESS,
   NEW_ROOM_MSG,
   ADD_USER,
-  REMOVE_USER
+  REMOVE_USER,
+  CHALLENGE
 } from "../../client/src/constants/events";
 import {
   JoinRoom,
-  NewRoomMessage
+  NewRoomMessage,
+  Challenge
 } from "../interfaces/clientEvents/roomEvents";
 import { UserData } from "../data/User";
 import { generateMessage } from "../utils/message";
@@ -36,12 +38,20 @@ const listeners = (io: SocketIO.Server) => {
     });
 
     socket.on(NEW_ROOM_MSG, ({ message }: NewRoomMessage) => {
-      const user = users.getUser(socket.id);
+      const user = users.getUserById(socket.id);
       if (!user || !message) {
         return;
       }
 
       io.to(user.room).emit(NEW_ROOM_MSG, generateMessage(user.name, message));
+    });
+
+    socket.on(CHALLENGE, ({ user }: Challenge) => {
+      const opponent = users.getUserByName(user);
+      const challenger = users.getUserById(socket.id);
+      if (opponent && challenger) {
+        socket.to(opponent.id).emit(CHALLENGE, { user: challenger.name });
+      }
     });
 
     socket.on("disconnect", () => {
