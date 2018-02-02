@@ -4,13 +4,15 @@ import { User } from "../interfaces/general";
 import {
   AddRoomMessageAction,
   UserAction,
-  NewRoomAction
+  NewRoomAction,
+  NewChallengerAction
 } from "../interfaces/actions";
 import {
   ADD_ROOM_MSG,
   ADD_USER,
   REMOVE_USER,
-  NEW_ROOM
+  NEW_ROOM,
+  NEW_CHALLENGER
 } from "../constants/actions";
 import { NewRoomMessage } from "../interfaces/serverEvents/roomEvents";
 
@@ -44,4 +46,9 @@ export const newRoom = (
     room,
     users
   }
+});
+
+export const newChallenger = (challenger: User): NewChallengerAction => ({
+  type: NEW_CHALLENGER,
+  payload: { challenger }
 });

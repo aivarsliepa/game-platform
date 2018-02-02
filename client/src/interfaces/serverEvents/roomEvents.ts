@@ -11,3 +11,7 @@ export interface AddUser {
 export interface RemoveUser {
   readonly user: string;
 }
+
+export interface Challenge {
+  readonly user: string;
+}

@@ -39,8 +39,9 @@ const roomMessages: Message[] = [
 
 const devState: RootState = {
   room: "TicTacToe",
-  socket: null,
+  challenger: "General Kenobi",
   roomMessages,
+  socket: null,
   users
 };
 

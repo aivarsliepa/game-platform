@@ -4,17 +4,20 @@ import {
   JOIN_SUCCESS,
   NEW_ROOM_MSG,
   REMOVE_USER,
-  ADD_USER
+  ADD_USER,
+  CHALLENGE
 } from "../constants/events";
 import { RootState } from "../interfaces/states";
 import {
   newRoom,
   addRoomMessage,
   removeUser,
-  addUser
+  addUser,
+  newChallenger
 } from "../actions/creators";
 import {
   NewRoomMessage,
+  Challenge,
   RemoveUser,
   AddUser
 } from "../interfaces/serverEvents/roomEvents";
@@ -40,6 +43,10 @@ const listeners = (
 
   socket.on(ADD_USER, ({ user }: AddUser): void => {
     store.dispatch(addUser(user));
+  });
+
+  socket.on(CHALLENGE, ({ user }: Challenge): void => {
+    store.dispatch(newChallenger(user));
   });
 };
 

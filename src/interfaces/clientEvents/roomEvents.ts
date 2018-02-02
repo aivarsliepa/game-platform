@@ -1,12 +1,12 @@
 export interface JoinRoom {
-  name: string;
-  room: string;
+  readonly name: string;
+  readonly room: string;
 }
 
 export interface NewRoomMessage {
-  message: string;
+  readonly message: string;
 }
 
 export interface Challenge {
-  user: string;
+  readonly user: string;
 }
