@@ -12,7 +12,15 @@
   background-color: #fff;
   border-radius: 5px;
   max-width: 500px;
-  min-height: 300px;
   margin: 0 auto;
   padding: 30px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.Modal__buttons {
+  display: flex;
+  justify-content: space-around;
+  margin: 30px 25px 0;
 }

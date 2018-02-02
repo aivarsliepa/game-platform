@@ -12,9 +12,11 @@ import {
   ADD_USER,
   REMOVE_USER,
   NEW_ROOM,
-  NEW_CHALLENGER
+  NEW_CHALLENGER,
+  REJECT_CHALLENGER
 } from "../constants/actions";
 import { NewRoomMessage } from "../interfaces/serverEvents/roomEvents";
+import { Action } from "redux";
 
 export const addRoomMessage = ({
   from,
@@ -52,3 +54,5 @@ export const newChallenger = (challenger: User): NewChallengerAction => ({
   type: NEW_CHALLENGER,
   payload: { challenger }
 });
+
+export const rejectChallenger = (): Action => ({ type: REJECT_CHALLENGER });

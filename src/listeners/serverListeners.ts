@@ -22,16 +22,15 @@ const listeners = (io: SocketIO.Server) => {
 
     socket.on(JOIN_ROOM, ({ name, room }: JoinRoom, callback) => {
       if (name && room) {
-        const roomId = room.trim().toLowerCase();
         users.removeUser(socket.id);
-        users.addUser({ id: socket.id, name, room: roomId });
-        socket.join(roomId, err => {
+        users.addUser({ id: socket.id, name, room });
+        socket.join(room, err => {
           if (!err) {
             socket.emit(JOIN_SUCCESS, {
-              room: roomId,
-              users: users.getUserNamesForRoom(roomId)
+              room,
+              users: users.getUserNamesForRoom(room)
             });
-            socket.broadcast.to(roomId).emit(ADD_USER, { user: name });
+            socket.broadcast.to(room).emit(ADD_USER, { user: name });
           }
         });
       }
