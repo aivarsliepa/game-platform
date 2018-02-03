@@ -5,7 +5,8 @@ import {
   NEW_ROOM_MSG,
   REMOVE_USER,
   ADD_USER,
-  CHALLENGE
+  CHALLENGE,
+  CHALLENGE_ACCEPTED
 } from "../constants/events";
 import { RootState } from "../interfaces/states";
 import {
@@ -13,7 +14,8 @@ import {
   addRoomMessage,
   removeUser,
   addUser,
-  newChallenger
+  newChallenger,
+  newOpponents
 } from "../actions/creators";
 import {
   NewRoomMessage,
@@ -21,6 +23,8 @@ import {
   RemoveUser,
   AddUser
 } from "../interfaces/serverEvents/roomEvents";
+
+import history from "../history";
 
 const listeners = (
   socket: SocketIOClient.Socket,
@@ -47,6 +51,12 @@ const listeners = (
 
   socket.on(CHALLENGE, (challenge: Challenge): void => {
     store.dispatch(newChallenger(challenge));
+  });
+
+  socket.on(CHALLENGE_ACCEPTED, (challenge: Challenge): void => {
+    store.dispatch(newOpponents([challenge.user]));
+    const { room } = store.getState();
+    history.push(`/game/${room}`);
   });
 };
 
