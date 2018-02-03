@@ -1,16 +1,16 @@
 import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
+import { withRouter, RouteComponentProps } from "react-router";
 import * as React from "react";
 
 import {
   ChallengeState,
   RootState,
-  RoomState,
   SocketState,
   OpponentsState
 } from "../../../interfaces/states";
-import NewMessageForm from "../NewMessageForm/NewMessageForm";
-import { CHALLENGE_ACCEPTED } from "../../../constants/events";
 import { removeChallenger, newOpponents } from "../../../actions/creators";
+import { CHALLENGE_ACCEPTED } from "../../../constants/events";
+import NewMessageForm from "../NewMessageForm/NewMessageForm";
 import Chatter from "../Chatter/Chatter";
 import SideBar from "../SideBar/SideBar";
 import Modal from "../Modal/Modal";
@@ -19,7 +19,6 @@ import "./Room.css";
 interface TStateProps {
   challenge: ChallengeState;
   socket: SocketState;
-  room: RoomState;
 }
 
 interface TDispatchProps {
@@ -27,14 +26,28 @@ interface TDispatchProps {
   newOpponents: (opponents: OpponentsState) => void;
 }
 
-type RoomProps = TStateProps & TDispatchProps;
+interface Params {
+  room: string;
+}
 
-class Room extends React.Component<RoomProps, Object> {
+interface RoomState {
+  room: string;
+}
+
+type RoomProps = TStateProps & TDispatchProps & RouteComponentProps<Params>;
+
+class Room extends React.Component<RoomProps, RoomState> {
   constructor(props: RoomProps) {
     super(props);
+    this.state = { room: "" };
     this.rejectChallenge = this.rejectChallenge.bind(this);
     this.acceptChallenge = this.acceptChallenge.bind(this);
   }
+
+  componentDidMount() {
+    this.setState({ room: this.props.match.params.room });
+  }
+
   rejectChallenge() {
     this.props.removeChallenger();
   }
@@ -45,11 +58,12 @@ class Room extends React.Component<RoomProps, Object> {
       socket.emit(CHALLENGE_ACCEPTED, challenge);
       this.props.newOpponents([challenge.user]);
       this.props.removeChallenger();
+      this.props.history.push(`/game/${this.state.room}`);
     }
   }
 
   renderChallengerModalContent() {
-    const { challenge, room } = this.props;
+    const { challenge } = this.props;
     if (!challenge) {
       return null;
     }
@@ -57,7 +71,7 @@ class Room extends React.Component<RoomProps, Object> {
     return (
       <div className="card-content">
         <div className="card-title center">
-          {challenge.user} has challenged you to a {room} game!
+          {challenge.user} has challenged you to a {this.state.room} game!
         </div>
         <div className="Modal__buttons">
           <button className="btn waves-effect" onClick={this.acceptChallenge}>
@@ -79,7 +93,7 @@ class Room extends React.Component<RoomProps, Object> {
 
     return (
       <div className="Room">
-        <SideBar />
+        <SideBar room={this.state.room} />
         <Chatter />
         <NewMessageForm />
         <Modal show={showModal}>{this.renderChallengerModalContent()}</Modal>
@@ -90,12 +104,10 @@ class Room extends React.Component<RoomProps, Object> {
 
 const mapStateToProps: MapStateToProps<TStateProps, null, RootState> = ({
   challenge,
-  room,
   socket
 }) => ({
   challenge,
-  socket,
-  room
+  socket
 });
 
 const mapDispatchToProps: MapDispatchToProps<
@@ -106,4 +118,4 @@ const mapDispatchToProps: MapDispatchToProps<
   removeChallenger: () => dispatch(removeChallenger())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Room);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Room));

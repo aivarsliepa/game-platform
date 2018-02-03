@@ -32,6 +32,21 @@ class StartPage extends Component<StartPageProps, StartPageState> {
     this.handleRoomChange = this.handleRoomChange.bind(this);
   }
 
+  componentDidMount() {
+    this.redirectIfNeeded();
+  }
+
+  componentDidUpdate() {
+    this.redirectIfNeeded();
+  }
+
+  redirectIfNeeded() {
+    const { room, history } = this.props;
+    if (room) {
+      history.replace(`/room/${room}`);
+    }
+  }
+
   handleNameChange(event: ChangeEvent<HTMLInputElement>): void {
     this.setState({ name: event.target.value });
   }
@@ -85,11 +100,6 @@ class StartPage extends Component<StartPageProps, StartPageState> {
   }
 
   render() {
-    const { room, history } = this.props;
-    if (room) {
-      history.replace(`/room/${room}`);
-    }
-
     return <div>{this.renderForm()}</div>;
   }
 }

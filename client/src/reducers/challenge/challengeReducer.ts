@@ -6,7 +6,7 @@ import { ChallengeState } from "../../interfaces/states";
 
 export const reducer: Reducer<ChallengeState> = (
   state = null,
-  { type, payload: { challenge } }: ChallengerAction
+  { type, payload: { challenge = null } = {} }: ChallengerAction
 ) => {
   switch (type) {
     case NEW_CHALLENGER:

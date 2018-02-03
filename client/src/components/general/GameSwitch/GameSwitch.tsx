@@ -10,6 +10,7 @@ interface Params {
 class GameSwitch extends React.Component<RouteComponentProps<Params>, Object> {
   render() {
     const { game } = this.props.match.params;
+
     switch (game) {
       case "TicTacToe":
         return <TicTacToe />;

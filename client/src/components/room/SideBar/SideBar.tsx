@@ -1,9 +1,8 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
-import "./SideBar.css";
+import { RoomState } from "../../../interfaces/states";
 import UserList from "../UserList/UserList";
-import { RoomState, RootState } from "../../../interfaces/states";
+import "./SideBar.css";
 
 interface SideBarProps {
   room: RoomState;
@@ -18,8 +17,4 @@ const SideBar = ({ room }: SideBarProps) => {
   );
 };
 
-function mapStateToProps({ room }: RootState): SideBarProps {
-  return { room };
-}
-
-export default connect(mapStateToProps)(SideBar);
+export default SideBar;

@@ -14,7 +14,7 @@ class App extends React.Component<Object, Object> {
         <Router history={history}>
           <Switch>
             <Route exact={true} path="/game/:game" component={GameSwitch} />
-            <Route exact={true} path="/room/:id" component={Room} />
+            <Route exact={true} path="/room/:room" component={Room} />
             <Route exact={true} path="/" component={StartPage} />
           </Switch>
         </Router>

@@ -6,7 +6,7 @@ import { NEW_OPPONENTS } from "../../constants/actions";
 
 export const reducer: Reducer<OpponentsState> = (
   state = [],
-  { type, payload: { opponents } }: OpponentsAction
+  { type, payload: { opponents = [] } = {} }: OpponentsAction
 ) => {
   switch (type) {
     case NEW_OPPONENTS:
