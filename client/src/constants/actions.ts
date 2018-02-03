@@ -1,3 +1,4 @@
+export const INIT_TIC_TAC_TOE = "INIT_TIC_TAC_TOE";
 export const NEW_CHALLENGER = "NEW_CHALLENGER";
 export const NEW_OPPONENTS = "NEW_OPPONENTS";
 export const ADD_ROOM_MSG = "ADD_ROOM_MSG";

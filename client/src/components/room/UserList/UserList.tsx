@@ -1,8 +1,8 @@
+import { connect, MapStateToProps } from "react-redux";
 import * as React from "react";
-import { connect } from "react-redux";
 
-import User from "../User/User";
 import { UserState, RootState } from "../../../interfaces/states";
+import User from "../User/User";
 
 interface UserListProps {
   users: UserState;
@@ -18,8 +18,8 @@ const UserList = ({ users }: UserListProps) => {
   );
 };
 
-function mapStateToProps({ users }: RootState): UserListProps {
-  return { users };
-}
+const mapStateToProps: MapStateToProps<UserListProps, null, RootState> = ({
+  users
+}) => ({ users });
 
 export default connect(mapStateToProps)(UserList);

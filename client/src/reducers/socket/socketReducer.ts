@@ -1,16 +1,16 @@
 import { Reducer } from "redux";
 
 import { SocketState } from "../../interfaces/states";
-import { SocketAction } from "../../interfaces/actions";
+import { RootAction } from "../../interfaces/actions/rootAction";
 import { SOCKET } from "../../constants/actions";
 
 export const reducer: Reducer<SocketState> = (
   state = null,
-  { type, payload }: SocketAction
+  action: RootAction
 ) => {
-  switch (type) {
+  switch (action.type) {
     case SOCKET:
-      return payload.socket;
+      return action.payload.socket;
     default:
       return state;
   }

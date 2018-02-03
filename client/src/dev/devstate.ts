@@ -1,7 +1,11 @@
 import * as v4 from "uuid/v4";
 
 import { Message } from "../interfaces/general";
-import { RootState, ChallengeState } from "../interfaces/states";
+import {
+  RootState,
+  ChallengeState,
+  TicTacToeState
+} from "../interfaces/states";
 
 const users = ["Aivars", "McGayver", "The Dude", "General Kenobi"];
 const roomMessages: Message[] = [
@@ -42,11 +46,18 @@ const challenge: ChallengeState = {
   user: users[3]
 };
 
+const tictactoe: TicTacToeState = {
+  fields: [],
+  myMove: false,
+  opponent: users[3]
+};
+
 const devState: RootState = {
   room: "TicTacToe",
   opponents: [],
   roomMessages,
   socket: null,
+  tictactoe,
   challenge,
   users
 };

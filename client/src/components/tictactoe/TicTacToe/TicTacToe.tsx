@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Component } from "react";
+
 import Board from "../Board/Board";
 
 export interface GameState {
@@ -11,7 +11,7 @@ const players = {
   "2": "circle"
 };
 
-class TicTacToe extends Component<Object, GameState> {
+class TicTacToe extends React.Component<Object, GameState> {
   private next: number = 1;
   constructor(props: Object) {
     super(props);
@@ -19,6 +19,10 @@ class TicTacToe extends Component<Object, GameState> {
       fields: Array(9).fill(0)
     };
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    // TODO
   }
 
   calculateWinner(squares: number[]) {

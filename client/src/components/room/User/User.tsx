@@ -1,18 +1,23 @@
+import { connect, MapStateToProps } from "react-redux";
 import * as React from "react";
-import { connect } from "react-redux";
 
-import "./User.css";
 import { RootState, SocketState } from "../../../interfaces/states";
 import { CHALLENGE } from "../../../constants/events";
+import "./User.css";
 
-interface UserProps {
+interface TOwnProps {
   name: string;
-  socket: SocketState;
 }
 
 interface UserState {
   visible: boolean;
 }
+
+interface TStateProps {
+  socket: SocketState;
+}
+
+type UserProps = TOwnProps & TStateProps;
 
 class User extends React.Component<UserProps, UserState> {
   constructor(props: UserProps) {
@@ -51,7 +56,9 @@ class User extends React.Component<UserProps, UserState> {
   }
 }
 
-const mapStatetoProps = ({ socket }: RootState) => ({
+const mapStatetoProps: MapStateToProps<TStateProps, null, RootState> = ({
+  socket
+}) => ({
   socket
 });
 

@@ -1,10 +1,10 @@
-import * as React from "react";
 import { Component, FormEvent, ChangeEvent } from "react";
-import { connect } from "react-redux";
+import { connect, MapStateToProps } from "react-redux";
+import * as React from "react";
 
-import "./NewMessageForm.css";
-import { NEW_ROOM_MSG } from "../../../constants/events";
 import { SocketState, RootState } from "../../../interfaces/states";
+import { NEW_ROOM_MSG } from "../../../constants/events";
+import "./NewMessageForm.css";
 
 interface NewMessageFormState {
   text: string;
@@ -59,8 +59,10 @@ class NewMessageForm extends Component<
   }
 }
 
-function mapStateToProps({ socket }: RootState): NewMessageFormProps {
-  return { socket };
-}
+const mapStateToProps: MapStateToProps<
+  NewMessageFormProps,
+  null,
+  RootState
+> = ({ socket }) => ({ socket });
 
 export default connect(mapStateToProps)(NewMessageForm);

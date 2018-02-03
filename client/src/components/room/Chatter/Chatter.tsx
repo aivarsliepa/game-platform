@@ -1,16 +1,15 @@
+import { connect, MapStateToProps } from "react-redux";
 import * as React from "react";
-import { Component } from "react";
-import { connect } from "react-redux";
 
-import "./Chatter.css";
-import Message from "../Message/Message";
 import { RoomMessagesState, RootState } from "../../../interfaces/states";
+import Message from "../Message/Message";
+import "./Chatter.css";
 
 interface ChatterProps {
   roomMessages: RoomMessagesState;
 }
 
-class Chatter extends Component<ChatterProps, Object> {
+class Chatter extends React.Component<ChatterProps, Object> {
   last: HTMLDivElement | null;
 
   constructor(props: ChatterProps) {
@@ -54,8 +53,8 @@ class Chatter extends Component<ChatterProps, Object> {
   }
 }
 
-function mapStateToProps({ roomMessages }: RootState): ChatterProps {
-  return { roomMessages };
-}
+const mapStateToProps: MapStateToProps<ChatterProps, null, RootState> = ({
+  roomMessages
+}) => ({ roomMessages });
 
 export default connect(mapStateToProps)(Chatter);

@@ -3,6 +3,7 @@ import { Challenge } from "./serverEvents/roomEvents";
 
 export interface RootState {
   readonly roomMessages: RoomMessagesState;
+  readonly tictactoe: TicTacToeState;
   readonly opponents: OpponentsState;
   readonly challenge: ChallengeState;
   readonly socket: SocketState;
@@ -17,3 +18,9 @@ export type RoomState = string | null;
 export type OpponentsState = User[];
 
 export type UserState = User[];
+
+export interface TicTacToeState {
+  fields: number[];
+  opponent: User;
+  myMove: boolean;
+}

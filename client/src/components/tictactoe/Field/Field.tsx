@@ -1,16 +1,15 @@
 import * as React from "react";
-import { Component } from "react";
 
-import "./Field.css";
-const cross = require("./cross.svg");
 const circle = require("./circle.svg");
+const cross = require("./cross.svg");
+import "./Field.css";
 
 export interface FieldProps {
   value: number;
   onClick: () => void;
 }
 
-class Field extends Component<FieldProps, Object> {
+class Field extends React.Component<FieldProps, Object> {
   renderField() {
     if (this.props.value > 0) {
       const src = this.props.value === 1 ? cross : circle;

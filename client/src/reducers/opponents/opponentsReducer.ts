@@ -1,16 +1,16 @@
 import { Reducer } from "redux";
 
-import { OpponentsAction } from "../../interfaces/actions";
 import { OpponentsState } from "../../interfaces/states";
 import { NEW_OPPONENTS } from "../../constants/actions";
+import { RootAction } from "../../interfaces/actions/rootAction";
 
 export const reducer: Reducer<OpponentsState> = (
   state = [],
-  { type, payload: { opponents = [] } = {} }: OpponentsAction
+  action: RootAction
 ) => {
-  switch (type) {
+  switch (action.type) {
     case NEW_OPPONENTS:
-      return opponents;
+      return action.payload.opponents;
     default:
       return state;
   }

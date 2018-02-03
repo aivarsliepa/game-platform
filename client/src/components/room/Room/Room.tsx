@@ -8,7 +8,7 @@ import {
   SocketState,
   OpponentsState
 } from "../../../interfaces/states";
-import { removeChallenger, newOpponents } from "../../../actions/creators";
+import { actions } from "../../../interfaces/actions/rootAction";
 import { CHALLENGE_ACCEPTED } from "../../../constants/events";
 import NewMessageForm from "../NewMessageForm/NewMessageForm";
 import Chatter from "../Chatter/Chatter";
@@ -114,8 +114,8 @@ const mapDispatchToProps: MapDispatchToProps<
   TDispatchProps,
   null
 > = dispatch => ({
-  newOpponents: opponents => dispatch(newOpponents(opponents)),
-  removeChallenger: () => dispatch(removeChallenger())
+  newOpponents: opponents => dispatch(actions.newOpponents(opponents)),
+  removeChallenger: () => dispatch(actions.removeChallenger())
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Room));

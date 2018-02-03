@@ -1,6 +1,6 @@
+import { withRouter, RouteComponentProps } from "react-router";
 import { Component, ChangeEvent, FormEvent } from "react";
 import { connect, MapStateToProps } from "react-redux";
-import { withRouter, RouteComponentProps } from "react-router";
 import * as React from "react";
 
 import { RootState, SocketState, RoomState } from "../../../interfaces/states";
