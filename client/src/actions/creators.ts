@@ -2,10 +2,11 @@ import * as v4 from "uuid/v4";
 
 import { User } from "../interfaces/general";
 import {
-  AddRoomMessageAction,
+  RoomMessageAction,
   UserAction,
   NewRoomAction,
-  NewChallengerAction
+  ChallengerAction,
+  OpponentsAction
 } from "../interfaces/actions";
 import {
   ADD_ROOM_MSG,
@@ -13,19 +14,19 @@ import {
   REMOVE_USER,
   NEW_ROOM,
   NEW_CHALLENGER,
-  REJECT_CHALLENGER
+  NEW_OPPONENTS
 } from "../constants/actions";
 import {
   NewRoomMessage,
   Challenge
 } from "../interfaces/serverEvents/roomEvents";
-import { Action } from "redux";
+import { OpponentsState } from "../interfaces/states";
 
 export const addRoomMessage = ({
   from,
   message,
   time
-}: NewRoomMessage): AddRoomMessageAction => ({
+}: NewRoomMessage): RoomMessageAction => ({
   type: ADD_ROOM_MSG,
   payload: {
     message: { from, message, time, id: v4() }
@@ -53,9 +54,17 @@ export const newRoom = (
   }
 });
 
-export const newChallenger = (challenge: Challenge): NewChallengerAction => ({
+export const newChallenger = (challenge: Challenge): ChallengerAction => ({
   type: NEW_CHALLENGER,
   payload: { challenge }
 });
 
-export const rejectChallenger = (): Action => ({ type: REJECT_CHALLENGER });
+export const removeChallenger = (): ChallengerAction => ({
+  type: NEW_CHALLENGER,
+  payload: { challenge: null }
+});
+
+export const newOpponents = (opponents: OpponentsState): OpponentsAction => ({
+  type: NEW_OPPONENTS,
+  payload: { opponents }
+});

@@ -44,9 +44,10 @@ const challenge: ChallengeState = {
 
 const devState: RootState = {
   room: "TicTacToe",
-  challenge,
+  opponents: [],
   roomMessages,
   socket: null,
+  challenge,
   users
 };
 

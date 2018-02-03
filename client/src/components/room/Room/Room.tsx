@@ -1,18 +1,20 @@
+import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as React from "react";
 
-import Chatter from "../Chatter/Chatter";
-import SideBar from "../SideBar/SideBar";
-import NewMessageForm from "../NewMessageForm/NewMessageForm";
-import "./Room.css";
 import {
   ChallengeState,
   RootState,
   RoomState,
-  SocketState
+  SocketState,
+  OpponentsState
 } from "../../../interfaces/states";
-import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
+import NewMessageForm from "../NewMessageForm/NewMessageForm";
+import { CHALLENGE_ACCEPTED } from "../../../constants/events";
+import { removeChallenger, newOpponents } from "../../../actions/creators";
+import Chatter from "../Chatter/Chatter";
+import SideBar from "../SideBar/SideBar";
 import Modal from "../Modal/Modal";
-import { rejectChallenger } from "../../../actions/creators";
+import "./Room.css";
 
 interface TStateProps {
   challenge: ChallengeState;
@@ -21,7 +23,8 @@ interface TStateProps {
 }
 
 interface TDispatchProps {
-  reject: () => void;
+  removeChallenger: () => void;
+  newOpponents: (opponents: OpponentsState) => void;
 }
 
 type RoomProps = TStateProps & TDispatchProps;
@@ -30,9 +33,19 @@ class Room extends React.Component<RoomProps, Object> {
   constructor(props: RoomProps) {
     super(props);
     this.rejectChallenge = this.rejectChallenge.bind(this);
+    this.acceptChallenge = this.acceptChallenge.bind(this);
   }
   rejectChallenge() {
-    this.props.reject();
+    this.props.removeChallenger();
+  }
+
+  acceptChallenge() {
+    const { socket, challenge } = this.props;
+    if (socket && challenge) {
+      socket.emit(CHALLENGE_ACCEPTED, challenge);
+      this.props.newOpponents([challenge.user]);
+      this.props.removeChallenger();
+    }
   }
 
   renderChallengerModalContent() {
@@ -47,7 +60,9 @@ class Room extends React.Component<RoomProps, Object> {
           {challenge.user} has challenged you to a {room} game!
         </div>
         <div className="Modal__buttons">
-          <button className="btn waves-effect">Accept</button>
+          <button className="btn waves-effect" onClick={this.acceptChallenge}>
+            Accept
+          </button>
           <button
             className="btn waves-effect red lighten-1"
             onClick={this.rejectChallenge}
@@ -87,7 +102,8 @@ const mapDispatchToProps: MapDispatchToProps<
   TDispatchProps,
   null
 > = dispatch => ({
-  reject: () => dispatch(rejectChallenger())
+  newOpponents: opponents => dispatch(newOpponents(opponents)),
+  removeChallenger: () => dispatch(removeChallenger())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Room);
