@@ -1,7 +1,7 @@
 import * as v4 from "uuid/v4";
 
 import { Message } from "../interfaces/general";
-import { RootState } from "../interfaces/states";
+import { RootState, ChallengeState } from "../interfaces/states";
 
 const users = ["Aivars", "McGayver", "The Dude", "General Kenobi"];
 const roomMessages: Message[] = [
@@ -37,9 +37,14 @@ const roomMessages: Message[] = [
   }
 ];
 
+const challenge: ChallengeState = {
+  room: v4(),
+  user: users[3]
+};
+
 const devState: RootState = {
   room: "TicTacToe",
-  challenger: "General Kenobi",
+  challenge,
   roomMessages,
   socket: null,
   users

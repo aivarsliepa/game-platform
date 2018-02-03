@@ -14,4 +14,5 @@ export interface RemoveUser {
 
 export interface Challenge {
   readonly user: string;
+  readonly room: string;
 }

@@ -45,8 +45,8 @@ const listeners = (
     store.dispatch(addUser(user));
   });
 
-  socket.on(CHALLENGE, ({ user }: Challenge): void => {
-    store.dispatch(newChallenger(user));
+  socket.on(CHALLENGE, (challenge: Challenge): void => {
+    store.dispatch(newChallenger(challenge));
   });
 };
 

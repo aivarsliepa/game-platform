@@ -1,16 +1,16 @@
 import { Reducer } from "redux";
 
-import { ChallengerState } from "../../interfaces/states";
-import { NewChallengerAction } from "../../interfaces/actions";
 import { NEW_CHALLENGER, REJECT_CHALLENGER } from "../../constants/actions";
+import { NewChallengerAction } from "../../interfaces/actions";
+import { ChallengeState } from "../../interfaces/states";
 
-export const reducer: Reducer<ChallengerState> = (
+export const reducer: Reducer<ChallengeState> = (
   state = null,
   { type, payload }: NewChallengerAction
 ) => {
   switch (type) {
     case NEW_CHALLENGER:
-      return payload.challenger;
+      return payload.challenge;
     case REJECT_CHALLENGER:
       return null;
     default:

@@ -1,5 +1,7 @@
 import { Action } from "redux";
-import { RoomState, SocketState, UserState, ChallengerState } from "./states";
+
+import { RoomState, SocketState, UserState } from "./states";
+import { Challenge } from "./serverEvents/roomEvents";
 import { Message } from "./general";
 
 export interface NewRoomAction extends Action {
@@ -28,6 +30,6 @@ export interface UserAction extends Action {
 
 export interface NewChallengerAction extends Action {
   payload: {
-    challenger: ChallengerState;
+    challenge: Challenge;
   };
 }

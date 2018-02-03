@@ -1,3 +1,5 @@
+import * as v4 from "uuid/v4";
+
 import {
   JOIN_ROOM,
   JOIN_SUCCESS,
@@ -49,7 +51,9 @@ const listeners = (io: SocketIO.Server) => {
       const opponent = users.getUserByName(user);
       const challenger = users.getUserById(socket.id);
       if (opponent && challenger) {
-        socket.to(opponent.id).emit(CHALLENGE, { user: challenger.name });
+        const room = v4();
+        socket.join(room); // TODO maybe leave room, if rejected
+        socket.to(opponent.id).emit(CHALLENGE, { user: challenger.name, room });
       }
     });
 

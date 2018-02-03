@@ -11,7 +11,7 @@ const players = {
   "2": "circle"
 };
 
-class Game extends Component<Object, GameState> {
+class TicTacToe extends Component<Object, GameState> {
   private next: number = 1;
   constructor(props: Object) {
     super(props);
@@ -66,4 +66,4 @@ class Game extends Component<Object, GameState> {
   }
 }
 
-export default Game;
+export default TicTacToe;

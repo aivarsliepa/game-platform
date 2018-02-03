@@ -126,9 +126,10 @@ describe("Socket challenge user", () => {
     });
   });
 
-  it("should send challenge to other user with challengers name", done => {
-    socket1.on(CHALLENGE, ({ user }: { user: string }) => {
-      expect(user).toBe(name2);
+  it("should send challenge to other user with challengers name and room", done => {
+    socket1.on(CHALLENGE, (challenge: { user: string; room: string }) => {
+      expect(challenge.user).toBe(name2);
+      expect(challenge.room).toBeTruthy();
       done();
     });
 

@@ -5,7 +5,7 @@ import SideBar from "../SideBar/SideBar";
 import NewMessageForm from "../NewMessageForm/NewMessageForm";
 import "./Room.css";
 import {
-  ChallengerState,
+  ChallengeState,
   RootState,
   RoomState,
   SocketState
@@ -15,7 +15,7 @@ import Modal from "../Modal/Modal";
 import { rejectChallenger } from "../../../actions/creators";
 
 interface TStateProps {
-  challenger: ChallengerState;
+  challenge: ChallengeState;
   socket: SocketState;
   room: RoomState;
 }
@@ -36,15 +36,15 @@ class Room extends React.Component<RoomProps, Object> {
   }
 
   renderChallengerModalContent() {
-    const { challenger, room } = this.props;
-    if (!challenger) {
+    const { challenge, room } = this.props;
+    if (!challenge) {
       return null;
     }
 
     return (
       <div className="card-content">
         <div className="card-title center">
-          {challenger} has challenged you to a {room} game!
+          {challenge.user} has challenged you to a {room} game!
         </div>
         <div className="Modal__buttons">
           <button className="btn waves-effect">Accept</button>
@@ -60,7 +60,7 @@ class Room extends React.Component<RoomProps, Object> {
   }
 
   render() {
-    const showModal = this.props.challenger !== null;
+    const showModal = this.props.challenge !== null;
 
     return (
       <div className="Room">
@@ -74,11 +74,11 @@ class Room extends React.Component<RoomProps, Object> {
 }
 
 const mapStateToProps: MapStateToProps<TStateProps, null, RootState> = ({
-  challenger,
+  challenge,
   room,
   socket
 }) => ({
-  challenger,
+  challenge,
   socket,
   room
 });
