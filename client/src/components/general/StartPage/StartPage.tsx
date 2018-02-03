@@ -1,27 +1,31 @@
-import * as React from "react";
-import { connect } from "react-redux";
 import { Component, ChangeEvent, FormEvent } from "react";
+import { connect, MapStateToProps } from "react-redux";
+import { withRouter, RouteComponentProps } from "react-router";
+import * as React from "react";
 
-import "./StartPage.css";
+import { RootState, SocketState, RoomState } from "../../../interfaces/states";
 import { JOIN_ROOM } from "../../../constants/events";
-import { RootState, SocketState } from "../../../interfaces/states";
+import "./StartPage.css";
+
 const tictactoe = require("./tic-tac-toe.svg");
 
 interface StartPageState {
-  userName: string;
-  roomName: string;
+  name: string;
+  room: string;
+}
+interface TStateProps {
+  socket: SocketState;
+  room: RoomState;
 }
 
-interface StartPageProps {
-  socket: SocketState;
-}
+type StartPageProps = RouteComponentProps<null> & TStateProps;
 
 class StartPage extends Component<StartPageProps, StartPageState> {
   constructor(props: StartPageProps) {
     super(props);
     this.state = {
-      roomName: "",
-      userName: ""
+      room: "",
+      name: ""
     };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,25 +33,23 @@ class StartPage extends Component<StartPageProps, StartPageState> {
   }
 
   handleNameChange(event: ChangeEvent<HTMLInputElement>): void {
-    this.setState({ userName: event.target.value });
+    this.setState({ name: event.target.value });
   }
 
   handleRoomChange(event: ChangeEvent<HTMLInputElement>): void {
-    this.setState({ roomName: event.target.value });
+    this.setState({ room: event.target.value });
   }
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    const socket = this.props.socket;
+    const { socket } = this.props;
     if (socket) {
-      const room = this.state.roomName;
-      const name = this.state.userName;
-
+      const { room, name } = this.state;
       socket.emit(JOIN_ROOM, { room, name });
     }
   }
 
-  renderForm(): JSX.Element {
+  renderForm() {
     return (
       <div className="card-panel StartPage">
         <form onSubmit={this.handleSubmit} autoComplete="off">
@@ -56,7 +58,7 @@ class StartPage extends Component<StartPageProps, StartPageState> {
               id="name"
               type="text"
               className="validate"
-              value={this.state.userName}
+              value={this.state.name}
               onChange={this.handleNameChange}
             />
             <label htmlFor="name">Display Name</label>
@@ -83,12 +85,18 @@ class StartPage extends Component<StartPageProps, StartPageState> {
   }
 
   render() {
+    const { room, history } = this.props;
+    if (room) {
+      history.replace(`/room/${room}`);
+    }
+
     return <div>{this.renderForm()}</div>;
   }
 }
 
-function mapStateToProps({ socket }: RootState): StartPageProps {
-  return { socket };
-}
+const mapStateToProps: MapStateToProps<TStateProps, null, RootState> = ({
+  socket,
+  room
+}) => ({ room, socket });
 
-export default connect(mapStateToProps)(StartPage);
+export default connect(mapStateToProps)(withRouter(StartPage));
