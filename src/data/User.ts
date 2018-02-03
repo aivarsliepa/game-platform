@@ -29,7 +29,7 @@ export class UserData {
     return this.users.find(user => user.id === id);
   }
 
-  getUserByName(name: string): User | undefined {
+  getUserByName(name: string | undefined): User | undefined {
     return this.users.find(user => user.name === name);
   }
 

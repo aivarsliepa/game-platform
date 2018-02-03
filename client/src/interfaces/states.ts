@@ -2,11 +2,11 @@ import { Message, User } from "./general";
 import { Challenge } from "./serverEvents/roomEvents";
 
 export interface RootState {
-  roomMessages: RoomMessagesState;
-  challenge: ChallengeState;
-  socket: SocketState;
-  users: UserState;
-  room: RoomState;
+  readonly roomMessages: RoomMessagesState;
+  readonly challenge: ChallengeState;
+  readonly socket: SocketState;
+  readonly users: UserState;
+  readonly room: RoomState;
 }
 
 export type ChallengeState = Challenge | null;

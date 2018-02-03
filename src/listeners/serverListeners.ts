@@ -6,15 +6,16 @@ import {
   NEW_ROOM_MSG,
   ADD_USER,
   REMOVE_USER,
-  CHALLENGE
+  CHALLENGE,
+  CHALLENGE_ACCEPTED
 } from "../../client/src/constants/events";
 import {
   JoinRoom,
   NewRoomMessage,
   Challenge
 } from "../interfaces/clientEvents/roomEvents";
-import { UserData } from "../data/User";
 import { generateMessage } from "../utils/message";
+import { UserData } from "../data/User";
 
 export const users = new UserData();
 
@@ -22,7 +23,7 @@ const listeners = (io: SocketIO.Server) => {
   io.on("connection", socket => {
     users.addUser({ id: socket.id, name: "", room: "" });
 
-    socket.on(JOIN_ROOM, ({ name, room }: JoinRoom, callback) => {
+    socket.on(JOIN_ROOM, ({ name, room }: JoinRoom) => {
       if (name && room) {
         users.removeUser(socket.id);
         users.addUser({ id: socket.id, name, room });
@@ -54,6 +55,14 @@ const listeners = (io: SocketIO.Server) => {
         const room = v4();
         socket.join(room); // TODO maybe leave room, if rejected
         socket.to(opponent.id).emit(CHALLENGE, { user: challenger.name, room });
+      }
+    });
+
+    socket.on(CHALLENGE_ACCEPTED, ({ room }: Challenge) => {
+      const user = users.getUserById(socket.id);
+      if (user && room) {
+        socket.to(room).emit(CHALLENGE_ACCEPTED, { user: user.name });
+        socket.join(room);
       }
     });
 

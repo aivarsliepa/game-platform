@@ -1,16 +1,18 @@
 import * as socketIO from "socket.io-client";
 import { Socket } from "socket.io-client";
 
-import { Message } from "../../utils/message";
-import "../../server";
 import {
   JOIN_SUCCESS,
   JOIN_ROOM,
   NEW_ROOM_MSG,
   ADD_USER,
   REMOVE_USER,
-  CHALLENGE
+  CHALLENGE,
+  CHALLENGE_ACCEPTED
 } from "../../../client/src/constants/events";
+import { Challenge } from "../../interfaces/clientEvents/roomEvents";
+import { Message } from "../../utils/message";
+import "../../server";
 
 const URL = "http://localhost:5000";
 const socketOptions = {
@@ -127,7 +129,7 @@ describe("Socket challenge user", () => {
   });
 
   it("should send challenge to other user with challengers name and room", done => {
-    socket1.on(CHALLENGE, (challenge: { user: string; room: string }) => {
+    socket1.on(CHALLENGE, (challenge: Challenge) => {
       expect(challenge.user).toBe(name2);
       expect(challenge.room).toBeTruthy();
       done();
@@ -135,6 +137,24 @@ describe("Socket challenge user", () => {
 
     socket1.on(JOIN_SUCCESS, () => {
       socket2.emit(JOIN_ROOM, { name: name2, room });
+    });
+    socket2.on(JOIN_SUCCESS, () => {
+      socket2.emit(CHALLENGE, { user: name1 });
+    });
+    socket1.emit(JOIN_ROOM, { name: name1, room });
+  });
+
+  it("should send CHALLENGE_ACCEPTED back with user name, when accepted", done => {
+    socket2.on(CHALLENGE_ACCEPTED, ({ user }: { user: string }) => {
+      expect(user).toBe(name1);
+      done();
+    });
+
+    socket1.on(JOIN_SUCCESS, () => {
+      socket2.emit(JOIN_ROOM, { name: name2, room });
+    });
+    socket1.on(CHALLENGE, (challenge: Challenge) => {
+      socket1.emit(CHALLENGE_ACCEPTED, challenge);
     });
     socket2.on(JOIN_SUCCESS, () => {
       socket2.emit(CHALLENGE, { user: name1 });
