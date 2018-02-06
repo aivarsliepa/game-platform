@@ -15,6 +15,7 @@ import Chatter from "../Chatter/Chatter";
 import SideBar from "../SideBar/SideBar";
 import Modal from "../Modal/Modal";
 import "./Room.css";
+import { Opponent } from "../../../interfaces/general";
 
 interface TStateProps {
   challenge: ChallengeState;
@@ -56,7 +57,12 @@ class Room extends React.Component<RoomProps, RoomState> {
     const { socket, challenge } = this.props;
     if (socket && challenge) {
       socket.emit(CHALLENGE_ACCEPTED, challenge);
-      this.props.newOpponents([challenge.user]);
+      // TODO think of a better way, ie, extract this from component
+      const opponent: Opponent = {
+        user: challenge.user,
+        firstMove: false
+      };
+      this.props.newOpponents([opponent]);
       this.props.removeChallenger();
       this.props.history.push(`/game/${this.state.room}`);
     }

@@ -2,7 +2,7 @@ import { createStore, Store, Dispatch, Action } from "redux";
 
 import { RootState } from "../interfaces/states";
 import reducer from "../reducers";
-// import devState from "../dev/devstate";
+import devState from "../dev/devState";
 
 const addLoggingToDispatch = (store: Store<RootState>): Dispatch<RootState> => {
   const rawDispatch = store.dispatch;
@@ -27,10 +27,10 @@ const configureStore = (): Store<RootState> => {
   //   process.env.NODE_ENV !== "production" && window.__REDUX_DEVTOOLS_EXTENSION__
   //     ? window.__REDUX_DEVTOOLS_EXTENSION__()
   //     : undefined;
-
+  console.log("configureStore called...");
   const store = createStore(
-    reducer
-    // devState,
+    reducer,
+    devState
     // reduxDevTools
   );
 
@@ -41,4 +41,4 @@ const configureStore = (): Store<RootState> => {
   return store;
 };
 
-export default configureStore;
+export default configureStore();

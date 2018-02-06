@@ -7,16 +7,8 @@ export interface User {
 export class UserData {
   private users: User[] = [];
 
-  addUser(user: User): void {
+  addUser(user: User | User[]): void {
     this.users = this.users.concat(user);
-  }
-
-  getUserList(): User[] {
-    return this.users.slice();
-  }
-
-  getCount(): number {
-    return this.users.length;
   }
 
   removeUser(id: string): User | undefined {
@@ -39,12 +31,5 @@ export class UserData {
 
   getUserNamesForRoom(room: string): string[] {
     return this.users.filter(user => user.room === room).map(user => user.name);
-  }
-
-  setUserRoom(id: string, room: string): void {
-    const user = this.getUserById(id);
-    if (user) {
-      user.room = room;
-    }
   }
 }

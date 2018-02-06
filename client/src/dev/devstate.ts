@@ -49,7 +49,11 @@ const challenge: ChallengeState = {
 const tictactoe: TicTacToeState = {
   fields: [],
   myMove: false,
-  opponent: users[3]
+  opponent: users[3],
+  side: {
+    "1": users[3],
+    "2": "You"
+  }
 };
 
 const devState: RootState = {

@@ -1,28 +1,33 @@
+import { connect, MapStateToProps, MapDispatchToProps } from "react-redux";
 import * as React from "react";
 
+import {
+  TicTacToeState,
+  SocketState,
+  RootState
+} from "../../../interfaces/states";
+import { actions } from "../../../interfaces/actions/rootAction";
 import Board from "../Board/Board";
 
-export interface GameState {
-  fields: number[];
+interface TStateProps extends TicTacToeState {
+  socket: SocketState;
 }
 
-const players = {
-  "1": "cross",
-  "2": "circle"
-};
+interface TDispatchProps {
+  init: () => void;
+}
 
-class TicTacToe extends React.Component<Object, GameState> {
+type TicTacToeGameProps = TDispatchProps & TStateProps;
+
+class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
   private next: number = 1;
-  constructor(props: Object) {
+  constructor(props: TicTacToeGameProps) {
     super(props);
-    this.state = {
-      fields: Array(9).fill(0)
-    };
     this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    // TODO
+    this.props.init();
   }
 
   calculateWinner(squares: number[]) {
@@ -50,24 +55,39 @@ class TicTacToe extends React.Component<Object, GameState> {
   }
 
   handleClick(i: number): void {
-    const fields = this.state.fields.slice();
-    if (fields[i] !== 0 || this.calculateWinner(fields) !== null) {
+    const fields = this.props.fields.slice();
+    if (
+      (!this.props.myMove && fields[i] !== 0) ||
+      this.calculateWinner(fields) !== null
+    ) {
       return;
     }
+
+    // todo dispatch and emit socket
     fields[i] = this.next;
     this.setState({ fields });
     this.next = this.next === 1 ? 2 : 1;
   }
 
   render() {
-    const winner = this.calculateWinner(this.state.fields);
+    const winner = this.calculateWinner(this.props.fields);
     return (
       <div>
-        <Board fields={this.state.fields} onClick={i => this.handleClick(i)} />
-        {winner ? `Winner is ${players[winner]}` : ""}
+        <Board fields={this.props.fields} onClick={i => this.handleClick(i)} />
+        {winner ? `Winner is ${this.props.fields[winner]}` : ""}
       </div>
     );
   }
 }
 
-export default TicTacToe;
+const mapStateToProps: MapStateToProps<TStateProps, null, RootState> = ({
+  tictactoe: { fields, myMove, opponent, side },
+  socket
+}) => ({ fields, myMove, opponent, side, socket });
+
+const mapDispatchToProps: MapDispatchToProps<
+  TDispatchProps,
+  null
+> = dispatch => ({ init: () => dispatch(actions.initTicTacToeGame()) });
+
+export default connect(mapStateToProps, mapDispatchToProps)(TicTacToeGame);

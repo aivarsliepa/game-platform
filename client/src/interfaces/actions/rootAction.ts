@@ -1,5 +1,4 @@
 import {
-  // INIT_TIC_TAC_TOE,
   NEW_CHALLENGER,
   NEW_OPPONENTS,
   ADD_ROOM_MSG,
@@ -15,7 +14,6 @@ import {
   RoomState,
   UserState
 } from "../states";
-import { Message } from "../general";
 import {
   removeChallenger,
   addRoomMessage,
@@ -25,6 +23,9 @@ import {
   addUser,
   newRoom
 } from "../../actions/creators";
+import { initTicTacToeGame } from "../../actions/tictactoeCreators";
+import { InitTicTacToeGame } from "./tictactoeActions";
+import { Message } from "../general";
 
 interface NewRoomAction {
   type: typeof NEW_ROOM;
@@ -77,6 +78,7 @@ interface NewOpponentsAction {
 }
 
 export type Actions = {
+  INIT_TIC_TAC_TOE: InitTicTacToeGame;
   NEW_CHALLENGER: NewChallengerAction;
   NEW_OPPONENTS: NewOpponentsAction;
   ADD_ROOM_MSG: RoomMessageAction;
@@ -89,6 +91,7 @@ export type Actions = {
 export type RootAction = Actions[keyof Actions];
 
 export const actions = {
+  initTicTacToeGame,
   removeChallenger,
   addRoomMessage,
   newChallenger,

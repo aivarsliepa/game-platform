@@ -25,6 +25,7 @@ import {
 } from "../interfaces/serverEvents/roomEvents";
 
 import history from "../history";
+import { Opponent } from "../interfaces/general";
 
 const listeners = (
   socket: SocketIOClient.Socket,
@@ -54,7 +55,11 @@ const listeners = (
   });
 
   socket.on(CHALLENGE_ACCEPTED, (challenge: Challenge): void => {
-    store.dispatch(newOpponents([challenge.user]));
+    const opponent: Opponent = {
+      user: challenge.user,
+      firstMove: true
+    };
+    store.dispatch(newOpponents([opponent]));
     const { room } = store.getState();
     history.push(`/game/${room}`);
   });

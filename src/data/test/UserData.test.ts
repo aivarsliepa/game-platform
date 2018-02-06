@@ -13,24 +13,22 @@ describe("UserData", () => {
     users.addUser(user3);
   });
 
-  describe("getCount", () => {
-    it("should return correct count", () => {
-      users.addUser(user1);
-      expect(users.getCount()).toBe(4);
-    });
-  });
-
   describe("addUser", () => {
     it("should add new user", () => {
-      expect(users.getCount()).toBe(3);
+      users.addUser(user1);
+      expect(users.getUserListForRoom(user1.room).length).toBe(2);
+    });
+
+    it("should add multiple users", () => {
+      users.addUser([user2, user3]);
+      expect(users.getUserListForRoom(user2.room).length).toBe(4);
     });
   });
 
   describe("removeUser", () => {
     it("should remove user", () => {
       users.removeUser(user2.id);
-      expect(users.getUserList()).not.toEqual(expect.arrayContaining([user2]));
-      expect(users.getCount()).toBe(2);
+      expect(users.getUserById(user2.id)).toBeFalsy();
     });
 
     it("should return removed user", () => {
@@ -55,22 +53,6 @@ describe("UserData", () => {
         expect.arrayContaining([user2, user3])
       );
       expect(users.getUserListForRoom(user1.room)).toEqual([user1]);
-    });
-  });
-
-  describe("getUserList", () => {
-    it("should return whole list of users", () => {
-      expect(users.getUserList()).toEqual(
-        expect.arrayContaining([user1, user3, user2])
-      );
-    });
-  });
-
-  describe("setUserRoom", () => {
-    it("should set correct user name", () => {
-      const newRoom = "newRoom";
-      users.setUserRoom(user1.id, newRoom);
-      expect(users.getUserById(user1.id).room).toBe(newRoom);
     });
   });
 

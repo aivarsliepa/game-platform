@@ -6,3 +6,8 @@ export interface Message {
 }
 
 export type User = string;
+
+export interface Opponent {
+  user: User;
+  firstMove: boolean;
+}

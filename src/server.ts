@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const server = http.createServer(app);
-export const io = socketIO(server);
+const io = socketIO(server);
 listeners(io);
 
 server.listen(PORT, () => {

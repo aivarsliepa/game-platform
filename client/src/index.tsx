@@ -7,11 +7,9 @@ import App from "./components/general/App/App";
 import "./index.css";
 import listeners from "./listeners";
 import { SOCKET } from "./constants/actions";
-import configureStore from "./store/configureStore";
+import store from "./store/configureStore";
 
 export const socket = io();
-
-const store = configureStore();
 
 store.dispatch({ type: SOCKET, payload: { socket } });
 
