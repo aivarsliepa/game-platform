@@ -26,6 +26,7 @@ import {
 
 import history from "../history";
 import { Opponent } from "../interfaces/general";
+import { listeners as tictactoeListeners } from "./tictactoeListeners";
 
 const listeners = (
   socket: SocketIOClient.Socket,
@@ -63,6 +64,8 @@ const listeners = (
     const { room } = store.getState();
     history.push(`/game/${room}`);
   });
+
+  tictactoeListeners(socket, store);
 };
 
 export default listeners;

@@ -11,7 +11,3 @@ export interface Challenge {
   readonly user?: string;
   readonly room?: string;
 }
-
-export interface TicTacToeMove {
-  readonly index?: number;
-}

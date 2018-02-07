@@ -7,6 +7,7 @@ import {
   RootState
 } from "../../../interfaces/states";
 import { actions } from "../../../interfaces/actions/rootAction";
+import { TIC_TAC_TOE } from "../../../constants/events";
 import Board from "../Board/Board";
 
 interface TStateProps extends TicTacToeState {
@@ -14,13 +15,13 @@ interface TStateProps extends TicTacToeState {
 }
 
 interface TDispatchProps {
+  move: (i: number) => void;
   init: () => void;
 }
 
 type TicTacToeGameProps = TDispatchProps & TStateProps;
 
 class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
-  private next: number = 1;
   constructor(props: TicTacToeGameProps) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -54,19 +55,21 @@ class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
     return null;
   }
 
-  handleClick(i: number): void {
-    const fields = this.props.fields.slice();
+  handleClick(index: number): void {
+    const { fields, myMove } = this.props;
     if (
-      (!this.props.myMove && fields[i] !== 0) ||
+      !myMove ||
+      fields[index] !== 0 ||
       this.calculateWinner(fields) !== null
     ) {
       return;
     }
 
-    // todo dispatch and emit socket
-    fields[i] = this.next;
-    this.setState({ fields });
-    this.next = this.next === 1 ? 2 : 1;
+    this.props.move(index);
+    const { socket } = this.props;
+    if (socket) {
+      socket.emit(TIC_TAC_TOE, { index });
+    }
   }
 
   render() {
@@ -74,7 +77,7 @@ class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
     return (
       <div>
         <Board fields={this.props.fields} onClick={i => this.handleClick(i)} />
-        {winner ? `Winner is ${this.props.fields[winner]}` : ""}
+        {winner ? `Winner is ${this.props.side[winner]}` : ""}
       </div>
     );
   }
@@ -88,6 +91,9 @@ const mapStateToProps: MapStateToProps<TStateProps, null, RootState> = ({
 const mapDispatchToProps: MapDispatchToProps<
   TDispatchProps,
   null
-> = dispatch => ({ init: () => dispatch(actions.initTicTacToeGame()) });
+> = dispatch => ({
+  move: (index: number) => dispatch(actions.myMoveTicTacToeGame(index)),
+  init: () => dispatch(actions.initTicTacToeGame())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(TicTacToeGame);

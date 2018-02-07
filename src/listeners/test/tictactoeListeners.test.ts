@@ -8,10 +8,8 @@ import {
   JOIN_ROOM,
   TIC_TAC_TOE
 } from "../../../client/src/constants/events";
-import {
-  Challenge,
-  TicTacToeMove
-} from "../../interfaces/clientEvents/roomEvents";
+import { TicTacToeMove } from "../../interfaces/clientEvents/tictactoeEvents";
+import { Challenge } from "../../interfaces/clientEvents/roomEvents";
 
 describe("TicTacToe listeners", () => {
   let socket1: SocketIOClient.Socket;

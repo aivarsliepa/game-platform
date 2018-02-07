@@ -23,61 +23,66 @@ import {
   addUser,
   newRoom
 } from "../../actions/creators";
-import { initTicTacToeGame } from "../../actions/tictactoeCreators";
-import { InitTicTacToeGame } from "./tictactoeActions";
+import { InitTicTacToeGame, MoveTicTacToeGame } from "./tictactoeActions";
+import {
+  myMoveTicTacToeGame,
+  initTicTacToeGame
+} from "../../actions/tictactoeCreators";
 import { Message } from "../general";
 
 interface NewRoomAction {
-  type: typeof NEW_ROOM;
-  payload: {
-    room: RoomState;
-    users: UserState;
+  readonly type: typeof NEW_ROOM;
+  readonly payload: {
+    readonly room: RoomState;
+    readonly users: UserState;
   };
 }
 
 interface SocketAction {
-  type: typeof SOCKET;
-  payload: {
-    socket: SocketState;
+  readonly type: typeof SOCKET;
+  readonly payload: {
+    readonly socket: SocketState;
   };
 }
 
 interface RoomMessageAction {
-  type: typeof ADD_ROOM_MSG;
-  payload: {
-    message: Message;
+  readonly type: typeof ADD_ROOM_MSG;
+  readonly payload: {
+    readonly message: Message;
   };
 }
 
 interface RemoveUserAction {
-  type: typeof REMOVE_USER;
-  payload: {
-    users: UserState;
+  readonly type: typeof REMOVE_USER;
+  readonly payload: {
+    readonly users: UserState;
   };
 }
 
 interface AddUserAction {
-  type: typeof ADD_USER;
-  payload: {
-    users: UserState;
+  readonly type: typeof ADD_USER;
+  readonly payload: {
+    readonly users: UserState;
   };
 }
 
 interface NewChallengerAction {
-  type: typeof NEW_CHALLENGER;
-  payload: {
-    challenge: ChallengeState;
+  readonly type: typeof NEW_CHALLENGER;
+  readonly payload: {
+    readonly challenge: ChallengeState;
   };
 }
 
 interface NewOpponentsAction {
-  type: typeof NEW_OPPONENTS;
-  payload: {
-    opponents: OpponentsState;
+  readonly type: typeof NEW_OPPONENTS;
+  readonly payload: {
+    readonly opponents: OpponentsState;
   };
 }
 
 export type Actions = {
+  OPPONENT_MOVE_TIC_TAC_TOE: MoveTicTacToeGame;
+  MY_MOVE_TIC_TAC_TOE: MoveTicTacToeGame;
   INIT_TIC_TAC_TOE: InitTicTacToeGame;
   NEW_CHALLENGER: NewChallengerAction;
   NEW_OPPONENTS: NewOpponentsAction;
@@ -91,6 +96,7 @@ export type Actions = {
 export type RootAction = Actions[keyof Actions];
 
 export const actions = {
+  myMoveTicTacToeGame,
   initTicTacToeGame,
   removeChallenger,
   addRoomMessage,

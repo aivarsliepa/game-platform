@@ -1,8 +1,8 @@
 import { createStore, Store, Dispatch, Action } from "redux";
 
 import { RootState } from "../interfaces/states";
+// import devState from "../dev/devState";
 import reducer from "../reducers";
-import devState from "../dev/devState";
 
 const addLoggingToDispatch = (store: Store<RootState>): Dispatch<RootState> => {
   const rawDispatch = store.dispatch;
@@ -29,8 +29,8 @@ const configureStore = (): Store<RootState> => {
   //     : undefined;
   console.log("configureStore called...");
   const store = createStore(
-    reducer,
-    devState
+    reducer
+    // devState
     // reduxDevTools
   );
 

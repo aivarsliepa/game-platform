@@ -1,5 +1,5 @@
-import { Message, User, Opponent } from "./general";
 import { Challenge } from "./serverEvents/roomEvents";
+import { Message, User, Opponent } from "./general";
 
 export interface RootState {
   readonly roomMessages: RoomMessagesState;
@@ -20,13 +20,13 @@ export type OpponentsState = Opponent[];
 export type UserState = User[];
 
 export interface SideState {
-  "1": string;
-  "2": string;
+  readonly "1": string;
+  readonly "2": string;
 }
 
 export interface TicTacToeState {
-  fields: number[];
-  opponent: User;
-  myMove: boolean;
-  side: SideState;
+  readonly fields: number[];
+  readonly opponent: User;
+  readonly myMove: boolean;
+  readonly side: SideState;
 }
