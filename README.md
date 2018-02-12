@@ -1,1 +1,16 @@
-<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a>, <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons">Those Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+Project deployed on [Heroku](https://super-duper-game-portal.herokuapp.com/)
+
+#TODO
+
+* add "tie" scenario detection and "Play Again" when that scenario occurs
+* refactor and polish quickfixes that were used to enable "Play again" feature
+* notify player when opponent leaves game
+* add default route
+* tictactoe single player versus AI
+* maybe rework how pending and active games are being tracked
+* add gulp for starting server before tests to enable unit testing sockets without manualy starting server
+* more tests for FE
+* add authorization and persisting user stats to DB
+* more games... ?
+
+Icons made by [Freepik](http://www.freepik.com), [Those Icons](https://www.flaticon.com/authors/those-icons) from www.flaticon.com and is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
