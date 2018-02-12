@@ -84,7 +84,7 @@ const listeners = (io: SocketIO.Server) => {
       }
     });
 
-    tictactoeListeners(socket);
+    tictactoeListeners(io, socket);
   });
 };
 

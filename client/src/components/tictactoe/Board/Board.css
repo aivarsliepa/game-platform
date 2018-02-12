@@ -3,4 +3,7 @@
   grid-template-columns: 100px 100px 100px;
   grid-template-rows: 100px 100px 100px;
   grid-auto-flow: column;
+  grid-gap: 1px;
+  padding: 0;
+  margin: 15px 0;
 }

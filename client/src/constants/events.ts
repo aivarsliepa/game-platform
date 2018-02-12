@@ -1,4 +1,5 @@
 export const CHALLENGE_ACCEPTED = "CHALLENGE_ACCEPTED";
+export const TIC_TAC_TOE_AGAIN = "TIC_TAC_TOE_AGAIN";
 export const JOIN_SUCCESS = "joinSuccess";
 export const REMOVE_USER = "REMOVE_USER";
 export const TIC_TAC_TOE = "TIC_TAC_TOE";

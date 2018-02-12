@@ -16,7 +16,9 @@ class Board extends React.Component<BoardProps, Object> {
     });
   }
   render() {
-    return <div className="Board">{this.renderFields()}</div>;
+    return (
+      <div className="Board card-panel blue-grey">{this.renderFields()}</div>
+    );
   }
 }
 

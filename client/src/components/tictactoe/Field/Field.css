@@ -1,6 +1,6 @@
 .Field {
-  border: 1px solid #71319c;
   display: flex;
+  background-color: white;
 }
 
 .Field img {

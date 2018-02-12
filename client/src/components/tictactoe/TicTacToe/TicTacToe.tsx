@@ -6,8 +6,8 @@ import {
   SocketState,
   RootState
 } from "../../../interfaces/states";
+import { TIC_TAC_TOE, TIC_TAC_TOE_AGAIN } from "../../../constants/events";
 import { actions } from "../../../interfaces/actions/rootAction";
-import { TIC_TAC_TOE } from "../../../constants/events";
 import Board from "../Board/Board";
 
 interface TStateProps extends TicTacToeState {
@@ -24,6 +24,7 @@ type TicTacToeGameProps = TDispatchProps & TStateProps;
 class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
   constructor(props: TicTacToeGameProps) {
     super(props);
+    this.handlePlayAgain = this.handlePlayAgain.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -42,17 +43,18 @@ class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
       [0, 4, 8],
       [2, 4, 6]
     ];
-    for (let i = 0; i < lines.length; i++) {
-      const [a, b, c] = lines[i];
+    let result = null;
+    lines.forEach(line => {
+      const [a, b, c] = line;
       if (
         squares[a] !== 0 &&
         squares[a] === squares[b] &&
         squares[a] === squares[c]
       ) {
-        return squares[a];
+        result = squares[a];
       }
-    }
-    return null;
+    });
+    return result;
   }
 
   handleClick(index: number): void {
@@ -72,12 +74,34 @@ class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
     }
   }
 
+  handlePlayAgain(): void {
+    const { socket } = this.props;
+    if (socket) {
+      socket.emit(TIC_TAC_TOE_AGAIN);
+    }
+  }
+
+  showMove() {
+    const { myMove, opponent } = this.props;
+    return `Next move: ${myMove ? "YOU" : opponent}`;
+  }
+
   render() {
     const winner = this.calculateWinner(this.props.fields);
     return (
-      <div>
+      <div style={{ textAlign: "center" }}>
+        <div className="light-blue-text darken-4">
+          {winner ? `Winner: ${this.props.side[winner]}` : this.showMove()}
+        </div>
         <Board fields={this.props.fields} onClick={i => this.handleClick(i)} />
-        {winner ? `Winner is ${this.props.side[winner]}` : ""}
+        {winner !== null && (
+          <button
+            className="waves-effect waves-light btn"
+            onClick={() => this.handlePlayAgain()}
+          >
+            Play again
+          </button>
+        )}
       </div>
     );
   }
