@@ -11,7 +11,8 @@ import { actions } from "../../../interfaces/actions/rootAction";
 import Board from "../Board/Board";
 
 interface TStateProps extends TicTacToeState {
-  socket: SocketState;
+  readonly socket: SocketState;
+  readonly winner: number;
 }
 
 interface TDispatchProps {
@@ -32,38 +33,9 @@ class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
     this.props.init();
   }
 
-  calculateWinner(squares: number[]) {
-    const lines = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6]
-    ];
-    let result = null;
-    lines.forEach(line => {
-      const [a, b, c] = line;
-      if (
-        squares[a] !== 0 &&
-        squares[a] === squares[b] &&
-        squares[a] === squares[c]
-      ) {
-        result = squares[a];
-      }
-    });
-    return result;
-  }
-
   handleClick(index: number): void {
-    const { fields, myMove } = this.props;
-    if (
-      !myMove ||
-      fields[index] !== 0 ||
-      this.calculateWinner(fields) !== null
-    ) {
+    const { fields, myMove, winner } = this.props;
+    if (!myMove || fields[index] !== 0 || winner !== -1) {
       return;
     }
 
@@ -81,20 +53,27 @@ class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
     }
   }
 
-  showMove() {
-    const { myMove, opponent } = this.props;
-    return `Next move: ${myMove ? "YOU" : opponent}`;
+  renderInfo() {
+    const { myMove, opponent, side, winner } = this.props;
+
+    switch (winner) {
+      case 0:
+        return "It's a TIE!";
+      case 1:
+      case 2:
+        return `Winner: ${side[winner]}`;
+      default:
+        return `Next move: ${myMove ? "YOU" : opponent}`;
+    }
   }
 
   render() {
-    const winner = this.calculateWinner(this.props.fields);
+    const { fields, winner } = this.props;
     return (
       <div style={{ textAlign: "center" }}>
-        <div className="light-blue-text darken-4">
-          {winner ? `Winner: ${this.props.side[winner]}` : this.showMove()}
-        </div>
-        <Board fields={this.props.fields} onClick={i => this.handleClick(i)} />
-        {winner !== null && (
+        <div className="light-blue-text darken-4">{this.renderInfo()}</div>
+        <Board fields={fields} onClick={i => this.handleClick(i)} />
+        {winner !== -1 && (
           <button
             className="waves-effect waves-light btn"
             onClick={() => this.handlePlayAgain()}
@@ -107,10 +86,43 @@ class TicTacToeGame extends React.Component<TicTacToeGameProps, Object> {
   }
 }
 
+function calculateWinner(fields: number[]): number {
+  const winningLines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+  let result = -1;
+  winningLines.forEach(line => {
+    const [a, b, c] = line;
+    if (fields[a] !== 0 && fields[a] === fields[b] && fields[a] === fields[c]) {
+      result = fields[a];
+    }
+  });
+
+  if (result === -1) {
+    result = fields.indexOf(0) > -1 ? -1 : 0;
+  }
+
+  return result;
+}
+
 const mapStateToProps: MapStateToProps<TStateProps, null, RootState> = ({
   tictactoe: { fields, myMove, opponent, side },
   socket
-}) => ({ fields, myMove, opponent, side, socket });
+}) => ({
+  winner: calculateWinner(fields),
+  opponent,
+  fields,
+  myMove,
+  side,
+  socket
+});
 
 const mapDispatchToProps: MapDispatchToProps<
   TDispatchProps,

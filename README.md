@@ -2,7 +2,7 @@ Project deployed on [Heroku](https://super-duper-game-portal.herokuapp.com/)
 
 #TODO
 
-* add "tie" scenario detection and "Play Again" when that scenario occurs
+* improve tictactoe game ui
 * refactor and polish quickfixes that were used to enable "Play again" feature
 * notify player when opponent leaves game
 * add default route
